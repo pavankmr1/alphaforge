@@ -1,0 +1,21 @@
+uv add \
+langchain \
+langgraph \
+langsmith \
+openai \
+pydantic \
+fastapi \
+uvicorn \
+pandas \
+numpy \
+plotly \
+streamlit \
+vectorbt \
+celery \
+redis \
+sqlalchemy \
+psycopg2-binary \
+python-dotenv \
+loguru \
+opentelemetry-api \
+opentelemetry-sdk

@@ -1,0 +1,443 @@
+# AlphaForge
+
+AI-Powered Strategy Intelligence & Quant Research Platform
+
+---
+
+# Vision
+
+AlphaForge is a production-grade AI agentic platform designed to:
+
+* Ingest trading strategies from PDFs, Telegram, YouTube, TradingView, and notes
+* Convert human trading concepts into deterministic logic
+* Generate Pine Script and Python strategies automatically
+* Backtest strategies using vectorbt
+* Analyze performance across multiple market regimes
+* Produce AI-generated insights and optimization suggestions
+* Build a robust quantitative research workflow
+
+This is NOT a signal-selling bot.
+
+This is:
+
+* an AI systems engineering project
+* a quantitative research platform
+* an institutional-style strategy intelligence engine
+
+---
+
+# High-Level Architecture
+
+```text
+Telegram / PDFs / YouTube
+            ↓
+Strategy Ingestion Agent
+            ↓
+Structured Strategy Schema
+            ↓
+Rule Compiler Agent
+            ↓
+Pine + Python Strategy Generator
+            ↓
+Backtesting Engine (vectorbt)
+            ↓
+Evaluation + Insight Engine
+            ↓
+Dashboard + Analytics
+```
+
+---
+
+# Tech Stack
+
+## AI / Agent Layer
+
+| Purpose             | Tool      |
+| ------------------- | --------- |
+| Agent orchestration | LangGraph |
+| LLM framework       | LangChain |
+| Prompt tracing      | LangSmith |
+| Structured outputs  | Pydantic  |
+
+---
+
+## Backend
+
+| Purpose        | Tool       |
+| -------------- | ---------- |
+| API            | FastAPI    |
+| Async jobs     | Celery     |
+| Queue          | Redis      |
+| Database       | PostgreSQL |
+| Object storage | MinIO      |
+
+---
+
+## Quant Layer
+
+| Purpose       | Tool     |
+| ------------- | -------- |
+| Backtesting   | vectorbt |
+| Data analysis | pandas   |
+| Numerical     | numpy    |
+| Charts        | Plotly   |
+
+---
+
+## Observability
+
+| Purpose       | Tool          |
+| ------------- | ------------- |
+| Monitoring    | Datadog       |
+| Metrics       | Prometheus    |
+| Visualization | Grafana       |
+| Logging       | OpenTelemetry |
+
+---
+
+## Frontend
+
+| Purpose         | Tool      |
+| --------------- | --------- |
+| MVP Dashboard   | Streamlit |
+| Future Frontend | Next.js   |
+
+---
+
+## DevOps
+
+| Purpose       | Tool               |
+| ------------- | ------------------ |
+| Containers    | Docker             |
+| CI/CD         | GitHub Actions     |
+| Secrets       | Vault              |
+| Orchestration | Kubernetes (later) |
+
+---
+
+# Initial Project Structure
+
+```text
+alphaforge/
+│
+├── agents/
+│   ├── ingestion/
+│   ├── compiler/
+│   ├── pine_generator/
+│   └── evaluator/
+│
+├── schemas/
+│
+├── backtesting/
+│
+├── dashboard/
+│
+├── infra/
+│
+├── notebooks/
+│
+├── data/
+│
+├── logs/
+│
+├── docker/
+│
+├── tests/
+│
+├── requirements/
+│
+├── .env.example
+├── docker-compose.yml
+├── Makefile
+├── pyproject.toml
+├── README.md
+└── main.py
+```
+
+---
+
+# Phase 1 Roadmap
+
+## Goal
+
+Build the first working strategy intelligence pipeline.
+
+---
+
+# Week 1 — Strategy Extraction MVP
+
+## Input
+
+* JADECAP PDF
+
+## Output
+
+Structured JSON schema.
+
+Example:
+
+```json
+{
+  "name": "JADECAP",
+  "type": "Liquidity Sweep",
+  "htf": "1H",
+  "ltf": "5m",
+  "entry_logic": [
+    "Sweep previous high/low",
+    "Close back inside range",
+    "Strong displacement candle"
+  ],
+  "sl": "Above sweep",
+  "rr": 2
+}
+```
+
+---
+
+# Week 2 — Pine Generator
+
+Generate:
+
+* Pine Script
+* alerts
+* visual entries/exits
+* webhook-ready templates
+
+---
+
+# Week 3 — Backtesting Engine
+
+Integrate:
+
+* vectorbt
+* historical data pipeline
+* strategy metrics
+
+Metrics:
+
+* Win Rate
+* Profit Factor
+* Max Drawdown
+* Expectancy
+* Sharpe Ratio
+* Trade Frequency
+
+---
+
+# Week 4 — Insight Engine
+
+Generate AI insights like:
+
+```text
+Strategy performs best during opening momentum.
+Fails heavily during ATR compression.
+Poor performance on expiry afternoons.
+```
+
+---
+
+# Environment Setup
+
+## 1. Install Python
+
+Recommended:
+
+* Python 3.11+
+
+Verify:
+
+```bash
+python --version
+```
+
+---
+
+# 2. Install uv (Recommended Package Manager)
+
+Mac/Linux:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Verify:
+
+```bash
+uv --version
+```
+
+---
+
+# 3. Create Project
+
+```bash
+mkdir alphaforge
+cd alphaforge
+```
+
+---
+
+# 4. Initialize Git
+
+```bash
+git init
+```
+
+---
+
+# 5. Create Virtual Environment
+
+```bash
+uv venv
+```
+
+Activate:
+
+Mac/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+---
+
+# 6. Install Core Dependencies
+
+```bash
+uv add \
+langchain \
+langgraph \
+langsmith \
+openai \
+pydantic \
+fastapi \
+uvicorn \
+pandas \
+numpy \
+plotly \
+streamlit \
+vectorbt \
+celery \
+redis \
+sqlalchemy \
+psycopg2-binary \
+python-dotenv \
+loguru \
+opentelemetry-api \
+opentelemetry-sdk
+```
+
+---
+
+# 7. Create .env
+
+```env
+OPENAI_API_KEY=
+LANGCHAIN_API_KEY=
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_PROJECT=alphaforge
+```
+
+---
+
+# 8. Create Initial README.md
+
+```md
+# AlphaForge
+
+AI-powered strategy intelligence and quantitative research platform.
+
+## Features
+- Strategy extraction
+- Pine generation
+- Backtesting
+- Insight engine
+- Agentic workflows
+
+## Stack
+- LangGraph
+- vectorbt
+- FastAPI
+- Streamlit
+- PostgreSQL
+```
+
+---
+
+# 9. First Git Commit
+
+```bash
+git add .
+git commit -m "Initial AlphaForge bootstrap"
+```
+
+---
+
+# 10. Create GitHub Repository
+
+Example:
+
+```bash
+git remote add origin https://github.com/<your-username>/alphaforge.git
+git push -u origin main
+```
+
+---
+
+# Immediate Priorities
+
+DO NOT BUILD YET:
+
+* auto trading
+* broker APIs
+* leverage systems
+* live execution
+* webhook automation
+
+FIRST BUILD:
+
+* research engine
+* strategy schema
+* deterministic rule compiler
+* backtesting pipeline
+* evaluation framework
+
+---
+
+# Core Philosophy
+
+AlphaForge is NOT trying to:
+
+* predict markets perfectly
+* create fake 90% win-rate systems
+* sell signals
+
+AlphaForge is designed to:
+
+* evaluate strategies systematically
+* reduce emotional trading
+* build probabilistic execution frameworks
+* create robust quantitative research workflows
+
+---
+
+# Long-Term Vision
+
+Eventually AlphaForge can evolve into:
+
+* multi-agent quant research system
+* autonomous strategy evaluator
+* institutional-style execution assistant
+* AI-powered market regime analyzer
+* portfolio optimization engine
+* semi-automated execution framework
+
+But the first milestone is simple:
+
+# Convert one strategy PDF into structured deterministic logic.
