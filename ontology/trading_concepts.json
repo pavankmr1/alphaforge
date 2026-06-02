@@ -1,0 +1,31 @@
+{
+    "liquidity_sweep": {
+        "category": "liquidity",
+        "logic_type": "stop_hunt",
+        "priority": "high"
+    },
+
+    "fvg": {
+        "category": "imbalance",
+        "logic_type": "gap",
+        "priority": "high"
+    },
+
+    "order_block": {
+        "category": "institutional_zone",
+        "logic_type": "supply_demand",
+        "priority": "medium"
+    },
+
+    "market_structure_shift": {
+        "category": "market_structure",
+        "logic_type": "trend_shift",
+        "priority": "high"
+    },
+
+    "bullish_displacement": {
+        "category": "momentum",
+        "logic_type": "aggressive_move",
+        "priority": "high"
+    }
+}
