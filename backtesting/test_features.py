@@ -1,0 +1,35 @@
+import yfinance as yf
+
+from feature_engine import (
+    compute_features
+)
+
+data = yf.download(
+    "^NSEI",
+    start="2024-01-01",
+    end="2025-01-01"
+)
+
+data.columns = (
+    data.columns
+    .get_level_values(0)
+)
+
+features = compute_features(
+    data
+)
+
+print(
+    features[
+        [
+            "EMA9",
+            "EMA20",
+            "EMA50",
+            "EMA200",
+            "VWAP",
+            "ATR14",
+            "RSI14",
+            "VOL_MA20"
+        ]
+    ].tail()
+)
