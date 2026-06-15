@@ -20,7 +20,7 @@ def run_backtest(
         entries,
         exits,
         init_cash=100000,
-        freq="1min"
+        freq="1D"
     )
 
     return portfolio

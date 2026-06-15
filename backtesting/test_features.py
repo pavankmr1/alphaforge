@@ -22,14 +22,23 @@ features = compute_features(
 print(
     features[
         [
+            "EMA5",
             "EMA9",
+            "EMA10",
+            "EMA15",
             "EMA20",
+            "EMA21",
             "EMA50",
             "EMA200",
             "VWAP",
             "ATR14",
             "RSI14",
-            "VOL_MA20"
+            "VOL_MA20",
+            "PreviousDayHigh",
+            "PreviousDayLow",
+            "Pivot",
+            "Support",
+            "Resistance"
         ]
     ].tail()
 )

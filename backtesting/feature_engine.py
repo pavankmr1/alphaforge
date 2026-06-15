@@ -1,71 +1,113 @@
 import pandas as pd
-import numpy as np
+
 
 def compute_features(data):
 
-    df = data.copy()
+    data = data.copy()
 
-    # ==========================
-    # EMA
-    # ==========================
-    df["EMA9"] = (
-        df["Close"]
-        .ewm(span=9)
+    # ==========================================
+    # EMAs
+    # ==========================================
+    data["EMA5"] = (
+        data["Close"]
+        .ewm(span=5, adjust=False)
         .mean()
     )
 
-    df["EMA20"] = (
-        df["Close"]
-        .ewm(span=20)
+    data["EMA9"] = (
+        data["Close"]
+        .ewm(span=9, adjust=False)
         .mean()
     )
 
-    df["EMA50"] = (
-        df["Close"]
-        .ewm(span=50)
+    data["EMA10"] = (
+        data["Close"]
+        .ewm(span=10, adjust=False)
         .mean()
     )
 
-    df["EMA200"] = (
-        df["Close"]
-        .ewm(span=200)
+    data["EMA15"] = (
+        data["Close"]
+        .ewm(span=15, adjust=False)
         .mean()
     )
 
-    # ==========================
+    data["EMA20"] = (
+        data["Close"]
+        .ewm(span=20, adjust=False)
+        .mean()
+    )
+
+    data["EMA21"] = (
+        data["Close"]
+        .ewm(span=21, adjust=False)
+        .mean()
+    )
+
+    data["EMA50"] = (
+        data["Close"]
+        .ewm(span=50, adjust=False)
+        .mean()
+    )
+
+    data["EMA200"] = (
+        data["Close"]
+        .ewm(span=200, adjust=False)
+        .mean()
+    )
+
+    # ==========================================
+    # SMA
+    # ==========================================
+    data["SMA18"] = (
+        data["Close"]
+        .rolling(18)
+        .mean()
+    )
+
+    data["SMA20"] = (
+        data["Close"]
+        .rolling(20)
+        .mean()
+    )
+
+    data["SMA200"] = (
+        data["Close"]
+        .rolling(200)
+        .mean()
+    )
+
+    # ==========================================
     # VWAP
-    # ==========================
-    typical_price = (
-        df["High"] +
-        df["Low"] +
-        df["Close"]
-    ) / 3
-
-    df["VWAP"] = (
-        (typical_price * df["Volume"]).cumsum()
+    # ==========================================
+    data["VWAP"] = (
+        (
+            data["Close"]
+            * data["Volume"]
+        ).cumsum()
         /
-        df["Volume"].cumsum()
+        data["Volume"].cumsum()
     )
 
-    # ==========================
-    # ATR
-    # ==========================
+    # ==========================================
+    # ATR14
+    # ==========================================
     high_low = (
-        df["High"] -
-        df["Low"]
+        data["High"]
+        - data["Low"]
     )
 
-    high_close = np.abs(
-        df["High"] -
-        df["Close"].shift()
-    )
+    high_close = (
+        data["High"]
+        - data["Close"].shift()
+    ).abs()
 
-    low_close = np.abs(
-        df["Low"] -
-        df["Close"].shift()
-    )
+    low_close = (
+        data["Low"]
+        - data["Close"].shift()
+    ).abs()
 
-    true_range = pd.concat(
+    tr = pd.concat(
         [
             high_low,
             high_close,
@@ -74,17 +116,16 @@ def compute_features(data):
         axis=1
     ).max(axis=1)
 
-    df["ATR14"] = (
-        true_range
-        .rolling(14)
+    data["ATR14"] = (
+        tr.rolling(14)
         .mean()
     )
 
-    # ==========================
-    # RSI
-    # ==========================
+    # ==========================================
+    # RSI14
+    # ==========================================
     delta = (
-        df["Close"]
+        data["Close"]
         .diff()
     )
 
@@ -108,21 +149,74 @@ def compute_features(data):
 
     rs = gain / loss
 
-    df["RSI14"] = (
-        100 -
+    data["RSI14"] = (
+        100
+        -
         (
-            100 /
+            100
+            /
             (1 + rs)
         )
     )
 
-    # ==========================
-    # VOLUME MA
-    # ==========================
-    df["VOL_MA20"] = (
-        df["Volume"]
+    # ==========================================
+    # VOLUME
+    # ==========================================
+    data["VOL_MA20"] = (
+        data["Volume"]
         .rolling(20)
         .mean()
     )
 
-    return df
+    data["AverageVolume"] = (
+        data["Volume"]
+        .rolling(20)
+        .mean()
+    )
+
+    # ==========================================
+    # PREVIOUS DAY LEVELS
+    # ==========================================
+    data["PreviousDayHigh"] = (
+        data["High"]
+        .shift(1)
+    )
+
+    data["PreviousDayLow"] = (
+        data["Low"]
+        .shift(1)
+    )
+
+    data["PreviousClose"] = (
+        data["Close"]
+        .shift(1)
+    )
+
+    # ==========================================
+    # PIVOT
+    # ==========================================
+    data["Pivot"] = (
+        data["PreviousDayHigh"]
+        +
+        data["PreviousDayLow"]
+        +
+        data["PreviousClose"]
+    ) / 3
+
+    # ==========================================
+    # SIMPLE PRICE ALIASES
+    # ==========================================
+    data["Price"] = data["Close"]
+    data["Market"] = data["Close"]
+    data["Trend"] = data["Close"]
+    data["PreviousHigh"] = data["High"].shift(1)
+
+    data["PreviousLow"] = data["Low"].shift(1)
+    from backtesting.support_resistance import (
+        add_support_resistance
+    )
+
+    data = add_support_resistance(
+        data
+    )
+    return data
