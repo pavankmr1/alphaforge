@@ -186,7 +186,39 @@ def compute_features(data):
         data["Low"]
         .shift(1)
     )
+    data["AsianHigh"] = (
+        data["High"]
+        .rolling(20)
+        .max()
+    )
 
+    data["AsianLow"] = (
+        data["Low"]
+        .rolling(20)
+        .min()
+    )
+    data["LiquidityHigh"] = (
+        data["High"]
+        .rolling(10)
+        .max()
+    )
+
+    data["LiquidityLow"] = (
+        data["Low"]
+        .rolling(10)
+        .min()
+    )
+    data["BullishFVG"] = (
+        data["Low"]
+        >
+        data["High"].shift(2)
+    )
+
+    data["BearishFVG"] = (
+        data["High"]
+        <
+        data["Low"].shift(2)
+    )
     data["PreviousClose"] = (
         data["Close"]
         .shift(1)
@@ -219,4 +251,9 @@ def compute_features(data):
     data = add_support_resistance(
         data
     )
+    from backtesting.smc_features import (
+        add_smc_features
+    )
+
+    data = add_smc_features(data)
     return data

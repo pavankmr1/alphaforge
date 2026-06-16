@@ -45,7 +45,7 @@ def generate_dsl_signals(
 
                 final_signal = (
                     final_signal
-                    |
+                    &
                     signal
                 )
 

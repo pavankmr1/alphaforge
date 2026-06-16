@@ -5,6 +5,14 @@ def execute_rule(
     rule,
     data
 ):
+    if (
+        rule.get("left") is None
+        and rule.get("right") is None
+    ):
+        return pd.Series(
+            True,
+            index=data.index
+        )
 
     rule_type = rule.get(
         "type"
