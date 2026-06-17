@@ -1,27 +1,29 @@
-from loguru import logger
-
 from backtesting.dsl_executor import (
     execute_rule
 )
-from backtesting.rule_mapping_executor import (
-    execute_mapping
-)
 
-def generate_dsl_signals(
+
+def generate_directional_signals(
     compiled_entry_logic,
     data
 ):
 
-    final_signal = None
+    long_entries = None
+    long_exits = None
 
     for item in compiled_entry_logic:
 
-        dsl = item.get("dsl")
+        dsl = item.get(
+            "dsl"
+        )
 
         if not dsl:
             continue
 
-        rules = dsl.get("rules", [])
+        rules = dsl.get(
+            "rules",
+            []
+        )
 
         for rule in rules:
 
@@ -29,57 +31,112 @@ def generate_dsl_signals(
                 rule,
                 data
             )
+            print()
+            print("RULE:", rule)
+            print("TYPE:", type(signal))
 
+            if signal is not None:
+                print("DTYPE:", signal.dtype)
             if signal is None:
                 continue
 
-            print(
-                rule,
-                "->",
-                int(signal.sum())
+            signal = (
+                signal
+                .fillna(False)
+                .astype(bool)
             )
 
-            if final_signal is None:
-
-                final_signal = signal
-
-            else:
-
-                final_signal = (
-                    final_signal
-                    |
-                    signal
-                )
-
-            print(
-                "Remaining Signals:",
-                int(final_signal.sum())
+            rule_type = rule.get(
+                "type"
             )
-    compiled_logic = item.get(
-        "compiled_logic",
-        []
-    )
 
-    for logic in compiled_logic:
+            # =====================
+            # LONG ENTRY RULES
+            # =====================
+            if rule_type in [
+                "cross_above",
+                "trend_up"
+            ]:
 
-        signal = execute_mapping(
-            logic,
-            data
+                if long_entries is None:
+
+                    long_entries = signal
+
+                else:
+
+                    long_entries = (
+                        long_entries
+                        |
+                        signal
+                    )
+
+            # =====================
+            # LONG EXIT RULES
+            # =====================
+            elif rule_type in [
+                "cross_below",
+                "trend_down"
+            ]:
+
+                if long_exits is None:
+
+                    long_exits = signal
+
+                else:
+
+                    long_exits = (
+                        long_exits
+                        |
+                        signal
+                    )
+
+    # =====================
+    # SAFE DEFAULTS
+    # =====================
+    if long_entries is None:
+
+        long_entries = (
+            data["Close"]
+            > 999999999
         )
 
-        if signal is None:
-            continue
+    if long_exits is None:
 
-        if final_signal is None:
+        long_exits = (
+            data["Close"]
+            > 999999999
+        )
 
-            final_signal = signal
+    long_entries = (
+        long_entries
+        .fillna(False)
+        .astype(bool)
+    )
 
-        else:
+    long_exits = (
+        long_exits
+        .fillna(False)
+        .astype(bool)
+    )
+    print(
+    "Same:",
+    (
+        long_entries[long_entries].index
+        ==
+        long_exits[long_exits].index
+    ).all()
+)
+    print(
+        "FINAL ENTRY DTYPE:",
+        long_entries.dtype
+    )
 
-            final_signal = (
-                final_signal
-                |
-                signal
-            )
+    print(
+        "FINAL EXIT DTYPE:",
+        long_exits.dtype
+    )
 
-    return final_signal
+    return (
+        long_entries,
+        long_exits
+    )
