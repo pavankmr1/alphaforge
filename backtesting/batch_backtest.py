@@ -160,10 +160,14 @@ for file in files:
         # ==================================
         # TEMP EXIT RULE
         # ==================================
-        exits = (
-            entries.shift(5)
-            .fillna(False)
-            .astype(bool)
+        from backtesting.exit_engine import (
+            generate_exits
+        )
+
+        exits = generate_exits(
+            entries,
+            data,
+            strategy
         )
 
         print(
@@ -270,7 +274,17 @@ for file in files:
                     1
                 ),
                 2
-            )
+            ),
+
+            "avg_return_per_trade":
+            round(
+                total_return /
+                max(
+                    int(portfolio.trades.count()),
+                    1
+                ),
+                4
+            ),
         })
 
         print(
@@ -334,16 +348,20 @@ else:
     df = df.sort_values(
         [
             "sharpe_ratio",
-            "total_return",
-            "win_rate"
+            "win_rate",
+            "total_return"
         ],
         ascending=False
     )
 
     OUTPUT_FILE.parent.mkdir(
         parents=True,
-        exist_ok=True
+        exist_ok=True   
     )
+
+    df = df[
+        df["signal_trade_ratio"] < 20
+    ]
     df = df[
         df["trades"] >= 5
     ]
