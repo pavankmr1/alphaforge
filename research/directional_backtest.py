@@ -59,43 +59,12 @@ long_entries, long_exits = (
     )
 )
 
-print("ENTRY TYPE:", type(long_entries))
-print("EXIT TYPE:", type(long_exits))
 
-print("ENTRY DTYPE:", long_entries.dtype)
-print("EXIT DTYPE:", long_exits.dtype)
-
-print()
-print("ENTRY TRUE COUNT:", int(long_entries.sum()))
-print("EXIT TRUE COUNT:", int(long_exits.sum()))
-
-print()
-print(long_entries[long_entries].head(20))
-print()
-print(long_exits[long_exits].head(20))
 long_exits = (
     long_exits
     .shift(1)
     .fillna(False)
     .astype(bool)
-)
-print(
-    long_exits[long_exits].index
-)
-print()
-
-print(
-    "Long Entries:",
-    int(
-        long_entries.sum()
-    )
-)
-
-print(
-    "Long Exits:",
-    int(
-        long_exits.sum()
-    )
 )
 
 # ==========================================
@@ -111,16 +80,6 @@ portfolio = vbt.Portfolio.from_signals(
     freq="1D"
 )
 
-print(type(long_entries))
-print(type(long_exits))
-
-print(long_entries.dtype)
-print(long_exits.dtype)
-
-print(long_entries.sum())
-print(long_exits.sum())
-
-print()
 
 print(
     "=" * 60

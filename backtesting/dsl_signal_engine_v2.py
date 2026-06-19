@@ -32,11 +32,6 @@ def generate_directional_signals(
                 data
             )
             print()
-            print("RULE:", rule)
-            print("TYPE:", type(signal))
-
-            if signal is not None:
-                print("DTYPE:", signal.dtype)
             if signal is None:
                 continue
 
@@ -45,7 +40,6 @@ def generate_directional_signals(
                 .fillna(False)
                 .astype(bool)
             )
-
             rule_type = rule.get(
                 "type"
             )
@@ -118,24 +112,18 @@ def generate_directional_signals(
         .fillna(False)
         .astype(bool)
     )
-    print(
-    "Same:",
-    (
-        long_entries[long_entries].index
-        ==
-        long_exits[long_exits].index
-    ).all()
-)
-    print(
-        "FINAL ENTRY DTYPE:",
-        long_entries.dtype
-    )
 
-    print(
-        "FINAL EXIT DTYPE:",
-        long_exits.dtype
-    )
+    # print(
+    #     "FINAL ENTRY DTYPE:",
+    #     long_entries.dtype
+    # )
 
+    # print(
+    #     "FINAL EXIT DTYPE:",
+    #     long_exits.dtype
+    # )
+    if long_entries is None:
+        return None, None
     return (
         long_entries,
         long_exits

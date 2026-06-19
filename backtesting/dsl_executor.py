@@ -208,7 +208,4 @@ def execute_rule(
 
         logger.error(str(e))
 
-        return pd.Series(
-            True,
-            index=data.index
-        )
+        return None

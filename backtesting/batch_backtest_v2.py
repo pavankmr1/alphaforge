@@ -1,3 +1,4 @@
+
 from pathlib import Path
 import json
 import pandas as pd
@@ -9,8 +10,8 @@ from backtesting.feature_engine import (
     compute_features
 )
 
-from backtesting.dsl_signal_engine import (
-    generate_dsl_signals
+from backtesting.dsl_signal_engine_v2 import (
+    generate_directional_signals
 )
 
 from backtesting.portfolio_engine import (
@@ -25,7 +26,7 @@ STRATEGY_DIR = Path(
 )
 
 OUTPUT_FILE = Path(
-    "data/batch_results/leaderboard.csv"
+    "data/batch_results/leaderboard_2.csv"
 )
 
 MIN_SIGNALS = 5
@@ -97,6 +98,8 @@ logger.info(
 # LOOP STRATEGIES
 # ==========================================
 for file in files:
+    if "EMA" not in file.name.upper():
+        continue
 
     try:
 
@@ -116,22 +119,32 @@ for file in files:
         # ==================================
         # GENERATE SIGNALS
         # ==================================
-        entries = generate_dsl_signals(
-            compiled_logic,
-            data
+        long_entries, long_exits = (
+            generate_directional_signals(
+                compiled_logic,
+                data
+            )
+        )
+        if long_entries is None:
+            continue
+        long_exits = (
+            long_exits
+            .shift(1)
+            .fillna(False)
+            .astype(bool)
         )
 
-        if entries is None:
+        if long_entries is None:
 
             print(
-                f"SKIPPED -> {file.name} (entries=None)"
+                f"SKIPPED -> {file.name} (long_entries=None)"
             )
 
             skipped_count += 1
             continue
 
         signal_count = int(
-            entries.sum()
+            long_entries.sum()
         )
 
         print(
@@ -151,8 +164,8 @@ for file in files:
         # ==================================
         # CLEAN SIGNALS
         # ==================================
-        entries = (
-            entries
+        long_entries = (
+            long_entries
             .fillna(False)
             .astype(bool)
         )
@@ -164,33 +177,33 @@ for file in files:
             generate_exits
         )
 
-        exits = generate_exits(
-            entries,
+        long_exits = generate_exits(
+            long_entries,
             data,
             strategy
         )
 
         print(
-            f"entries dtype: {entries.dtype}"
+            f"long_entries dtype: {long_entries.dtype}"
         )
 
         print(
-            f"exits dtype: {exits.dtype}"
+            f"long_exits dtype: {long_exits.dtype}"
         )
 
-        assert entries.dtype == bool
-        assert exits.dtype == bool
+        assert long_entries.dtype == bool
+        assert long_exits.dtype == bool
 
         print(
             f"BACKTESTING -> {file.name}"
         )
-        print(entries.dtype)
-        print(exits.dtype)
+        print(long_entries.dtype)
+        print(long_exits.dtype)
 
         portfolio = run_backtest(
-            data["Close"],
-            entries,
-            exits
+            close=data["Close"],
+            entries=long_entries,
+            exits=long_exits
         )
 
         print(

@@ -256,4 +256,237 @@ def compute_features(data):
     )
 
     data = add_smc_features(data)
+    # ==========================================
+    # CANDLE FEATURES
+    # ==========================================
+
+    data["GREEN_CANDLE"] = (
+        data["Close"]
+        >
+        data["Open"]
+    )
+
+    data["RED_CANDLE"] = (
+        data["Close"]
+        <
+        data["Open"]
+    )
+
+    # ==========================================
+    # CONSECUTIVE GREEN CANDLES
+    # ==========================================
+
+    data["CONSEC_GREEN_2"] = (
+
+        data["GREEN_CANDLE"]
+
+        &
+
+        data["GREEN_CANDLE"].shift(1)
+
+    )
+
+    data["CONSEC_GREEN_3"] = (
+
+        data["GREEN_CANDLE"]
+
+        &
+
+        data["GREEN_CANDLE"].shift(1)
+
+        &
+
+        data["GREEN_CANDLE"].shift(2)
+
+    )
+
+    # ==========================================
+    # CONSECUTIVE RED CANDLES
+    # ==========================================
+
+    data["CONSEC_RED_2"] = (
+
+        data["RED_CANDLE"]
+
+        &
+
+        data["RED_CANDLE"].shift(1)
+
+    )
+
+    data["CONSEC_RED_3"] = (
+
+        data["RED_CANDLE"]
+
+        &
+
+        data["RED_CANDLE"].shift(1)
+
+        &
+
+        data["RED_CANDLE"].shift(2)
+
+    )
+
+    # ==========================================
+    # WICK FEATURES
+    # ==========================================
+
+    body = (
+        data["Close"]
+        -
+        data["Open"]
+    ).abs()
+
+    lower_wick = (
+
+        data[
+            ["Open", "Close"]
+        ]
+        .min(axis=1)
+
+        -
+
+        data["Low"]
+
+    )
+
+    upper_wick = (
+
+        data["High"]
+
+        -
+
+        data[
+            ["Open", "Close"]
+        ]
+        .max(axis=1)
+
+    )
+
+    data["LONG_LOWER_WICK"] = (
+
+        lower_wick
+
+        >
+
+        body * 1.5
+
+    )
+
+    data["LONG_UPPER_WICK"] = (
+
+        upper_wick
+
+        >
+
+        body * 1.5
+
+    )
+
+    # ==========================================
+    # CONFIRMATION CANDLES
+    # ==========================================
+
+    data["BULLISH_CONFIRMATION"] = (
+
+        (data["Close"] > data["Open"])
+
+        &
+
+        (
+            (data["Close"] - data["Open"])
+            >
+            data["ATR14"] * 0.5
+        )
+
+    )
+
+    data["BEARISH_CONFIRMATION"] = (
+
+        (data["Close"] < data["Open"])
+
+        &
+
+        (
+            (data["Open"] - data["Close"])
+            >
+            data["ATR14"] * 0.5
+        )
+
+    )
+
+    # ==========================================
+    # REACTION ZONE PROTOTYPE
+    # ==========================================
+
+    data["PREV_BEARISH_HIGH"] = (
+
+        data["High"]
+        .where(
+            data["RED_CANDLE"]
+        )
+        .ffill()
+
+    )
+
+    data["PREV_BEARISH_LOW"] = (
+
+        data["Low"]
+        .where(
+            data["RED_CANDLE"]
+        )
+        .ffill()
+
+    )
+
+    # ==========================================
+    # MARKET STRUCTURE
+    # ==========================================
+
+    data["HIGHER_HIGH"] = (
+        data["High"]
+        >
+        data["High"].shift(1)
+    )
+
+    data["HIGHER_LOW"] = (
+        data["Low"]
+        >
+        data["Low"].shift(1)
+    )
+
+    data["LOWER_HIGH"] = (
+        data["High"]
+        <
+        data["High"].shift(1)
+    )
+
+    data["LOWER_LOW"] = (
+        data["Low"]
+        <
+        data["Low"].shift(1)
+    )
+
+    data["BULLISH_STRUCTURE"] = (
+
+        data["HIGHER_HIGH"]
+
+        &
+
+        data["HIGHER_LOW"]
+
+    ).fillna(False).astype(bool)
+
+
+    data["BEARISH_STRUCTURE"] = (
+
+        data["LOWER_HIGH"]
+
+        &
+
+        data["LOWER_LOW"]
+
+    ).fillna(False).astype(bool)
+
     return data
