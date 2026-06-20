@@ -385,6 +385,158 @@ def compute_features(data):
     )
 
     # ==========================================
+    # SWING POINTS
+    # ==========================================
+
+    data["SWING_HIGH"] = (
+
+        (data["High"] > data["High"].shift(1))
+
+        &
+
+        (data["High"] > data["High"].shift(-1))
+
+    )
+
+    data["SWING_LOW"] = (
+
+        (data["Low"] < data["Low"].shift(1))
+
+        &
+
+        (data["Low"] < data["Low"].shift(-1))
+
+    )
+
+    data["LAST_SWING_HIGH"] = (
+
+        data["High"]
+        .where(
+            data["SWING_HIGH"]
+        )
+        .ffill()
+
+    )
+
+    data["LAST_SWING_LOW"] = (
+
+        data["Low"]
+        .where(
+            data["SWING_LOW"]
+        )
+        .ffill()
+
+    )
+
+    # ==========================================
+    # LIQUIDITY SWEEPS (FIRST BREAK ONLY)
+    # ==========================================
+
+    # ==========================================
+    # LIQUIDITY SWEEPS V3
+    # ==========================================
+
+    data["SWEEP_SWING_LOW"] = (
+
+        (
+            data["Low"]
+            <
+            data["LAST_SWING_LOW"].shift(1)
+        )
+
+        &
+
+        (
+            data["Low"].shift(1)
+            >=
+            data["LAST_SWING_LOW"].shift(1)
+        )
+
+    )
+
+    data["SWEEP_SWING_HIGH"] = (
+
+        (
+            data["High"]
+            >
+            data["LAST_SWING_HIGH"].shift(1)
+        )
+
+        &
+
+        (
+            data["High"].shift(1)
+            <=
+            data["LAST_SWING_HIGH"].shift(1)
+        )
+
+    )
+
+    # ==========================================
+    # BREAK OF STRUCTURE
+    # ==========================================
+
+    data["BOS_BULLISH"] = (
+
+        (
+            data["Close"]
+            >
+            data["LAST_SWING_HIGH"].shift(1)
+        )
+
+        &
+
+        (
+            data["Close"].shift(1)
+            <=
+            data["LAST_SWING_HIGH"].shift(1)
+        )
+
+    )
+
+    data["BOS_BEARISH"] = (
+
+        (
+            data["Close"]
+            <
+            data["LAST_SWING_LOW"].shift(1)
+        )
+
+        &
+
+        (
+            data["Close"].shift(1)
+            >=
+            data["LAST_SWING_LOW"].shift(1)
+        )
+
+    )
+
+   
+    # ==========================================
+    # LIQUIDITY REJECTION
+    # ==========================================
+
+    data["BULLISH_SWEEP_REJECTION"] = (
+
+        data["SWEEP_SWING_LOW"]
+
+        &
+
+        data["LONG_LOWER_WICK"]
+
+    )
+
+    data["BEARISH_SWEEP_REJECTION"] = (
+
+        data["SWEEP_SWING_HIGH"]
+
+        &
+
+        data["LONG_UPPER_WICK"]
+
+    )
+    # ==========================================
     # CONFIRMATION CANDLES
     # ==========================================
 
@@ -416,6 +568,30 @@ def compute_features(data):
 
     )
 
+     # ==========================================
+    # STRONG BOS
+    # ==========================================
+
+    data["STRONG_BOS_BULLISH"] = (
+
+        data["BOS_BULLISH"]
+
+        &
+
+        data["BULLISH_CONFIRMATION"]
+
+    )
+
+    data["STRONG_BOS_BEARISH"] = (
+
+        data["BOS_BEARISH"]
+
+        &
+
+        data["BEARISH_CONFIRMATION"]
+
+    )
+
     # ==========================================
     # REACTION ZONE PROTOTYPE
     # ==========================================
@@ -440,6 +616,7 @@ def compute_features(data):
 
     )
 
+    
     # ==========================================
     # MARKET STRUCTURE
     # ==========================================
@@ -488,5 +665,29 @@ def compute_features(data):
         data["LOWER_LOW"]
 
     ).fillna(False).astype(bool)
+
+    # ==========================================
+    # TREND V2
+    # ==========================================
+
+    data["BULLISH_TREND_V2"] = (
+
+        (data["EMA20"] > data["EMA50"])
+
+        &
+
+        data["BULLISH_STRUCTURE"]
+
+    )
+
+    data["BEARISH_TREND_V2"] = (
+
+        (data["EMA20"] < data["EMA50"])
+
+        &
+
+        data["BEARISH_STRUCTURE"]
+
+    )
 
     return data
