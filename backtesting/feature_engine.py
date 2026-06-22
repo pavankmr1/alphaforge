@@ -690,4 +690,22 @@ def compute_features(data):
 
     )
 
+    # ==================================
+    # RECENT LIQUIDITY SWEEP
+    # ==================================
+
+    data["RECENT_SWEEP"] = (
+
+        data["SWEEP_SWING_LOW"]
+
+        .rolling(5)
+
+        .max()
+
+        .fillna(False)
+
+        .astype(bool)
+
+    )
+
     return data
