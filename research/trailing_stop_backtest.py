@@ -54,6 +54,7 @@ for df in [
     data_5m,
     data_1m
 ]:
+
     df.columns = (
         df.columns
         .get_level_values(0)
@@ -130,7 +131,7 @@ entries = build_1m_trigger(
 )
 
 # ==================================================
-# ATR EXITS
+# TRAILING STOP EXIT ENGINE
 # ==================================================
 
 exits = pd.Series(
@@ -140,10 +141,18 @@ exits = pd.Series(
 
 in_trade = False
 
-stop_price = None
-target_price = None
+entry_atr = None
+highest_price = None
+trail_stop = None
 
 for i in range(len(data_1m)):
+
+    current_time = (
+        data_1m.index[i]
+        .tz_convert("Asia/Kolkata")
+    )
+
+    # ENTRY
 
     if entries.iloc[i] and not in_trade:
 
@@ -151,44 +160,55 @@ for i in range(len(data_1m)):
             data_1m["Close"].iloc[i]
         )
 
-        atr = (
+        entry_atr = (
             data_1m["ATR14"].iloc[i]
         )
 
-        stop_price = (
-            entry_price
-            -
-            2 * atr
-        )
+        highest_price = entry_price
 
-        target_price = (
+        trail_stop = (
+
             entry_price
-            +
-            6 * atr
+
+            -
+
+            (2 * entry_atr)
+
         )
 
         in_trade = True
 
+    # MANAGE OPEN POSITION
+
     elif in_trade:
 
-        low = data_1m["Low"].iloc[i]
-        high = data_1m["High"].iloc[i]
+        high = (
+            data_1m["High"].iloc[i]
+        )
+
+        low = (
+            data_1m["Low"].iloc[i]
+        )
+
+        highest_price = max(
+            highest_price,
+            high
+        )
+
+        trail_stop = max(
+
+            trail_stop,
+
+            highest_price
+
+            -
+
+            (2 * entry_atr)
+
+        )
 
         stop_hit = (
-            low <= stop_price
-        )
-
-        target_hit = (
-            high >= target_price
-        )
-
-        # =====================================
-        # END OF DAY EXIT (3:15 PM IST)
-        # =====================================
-
-        current_time = (
-            data_1m.index[i]
-            .tz_convert("Asia/Kolkata")
+            low <= trail_stop
         )
 
         eod_exit = (
@@ -201,40 +221,18 @@ for i in range(len(data_1m)):
 
         )
 
-        # =====================================
+        if stop_hit or eod_exit:
 
-        if (
-            stop_hit
-            or
-            target_hit
-            or
-            eod_exit
-        ):
-            if eod_exit:
-
-                print(
-                    "EOD EXIT GENERATED:",
-                    current_time
-                )
             exits.iloc[i] = True
 
             in_trade = False
 
-            stop_price = None
-            target_price = None
-print()
-print("=" * 60)
-print("EXIT SUMMARY")
-print("=" * 60)
+            entry_atr = None
+            highest_price = None
+            trail_stop = None
 
-print(
-    "Exit Signals:",
-    int(
-        exits.sum()
-    )
-)
 # ==================================================
-# BACKTEST
+# PORTFOLIO
 # ==================================================
 
 portfolio = vbt.Portfolio.from_signals(
@@ -252,12 +250,12 @@ portfolio = vbt.Portfolio.from_signals(
 )
 
 # ==================================================
-# REPORT
+# RESULTS
 # ==================================================
 
 print()
 print("=" * 60)
-print("ALPHAFORGE V3 MTF BACKTEST")
+print("ALPHAFORGE V3 TRAILING STOP")
 print("=" * 60)
 
 print()
@@ -265,7 +263,9 @@ print()
 print(
     "15M Bullish:",
     int(
-        context_15m["BULLISH_CONTEXT"].sum()
+        context_15m[
+            "BULLISH_CONTEXT"
+        ].sum()
     )
 )
 
@@ -336,59 +336,40 @@ print("=" * 60)
 print("TRADES")
 print("=" * 60)
 
-print()
-
-print(
-    portfolio.trades.records_readable.to_string()
-)
-print()
-print("=" * 60)
-print("HOLDING TIME ANALYSIS")
-print("=" * 60)
-
 trades = portfolio.trades.records_readable
+
+print(trades)
 
 if len(trades) > 0:
 
-    for idx, trade in trades.iterrows():
+    print()
 
-        duration = (
-
-            trade["Exit Timestamp"]
-
-            -
-
-            trade["Entry Timestamp"]
-
+    print(
+        "Average Trade Return:",
+        round(
+            float(
+                trades["Return"].mean()
+            ),
+            4
         )
+    )
 
-        print()
-
-        print(
-            f"Trade #{idx + 1}"
+    print(
+        "Best Trade:",
+        round(
+            float(
+                trades["Return"].max()
+            ),
+            4
         )
+    )
 
-        print(
-            "Entry:",
-            trade["Entry Timestamp"]
-            .tz_convert("Asia/Kolkata")
+    print(
+        "Worst Trade:",
+        round(
+            float(
+                trades["Return"].min()
+            ),
+            4
         )
-
-        print(
-            "Exit:",
-            trade["Exit Timestamp"]
-            .tz_convert("Asia/Kolkata")
-        )
-
-        print(
-            "Duration:",
-            duration
-        )
-
-        print(
-            "Return:",
-            round(
-                trade["Return"],
-                4
-            )
-        )
+    )
