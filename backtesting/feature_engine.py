@@ -4,7 +4,7 @@ import pandas as pd
 def compute_features(data):
 
     data = data.copy()
-
+    
     # ==========================================
     # EMAs
     # ==========================================
@@ -208,16 +208,134 @@ def compute_features(data):
         .rolling(10)
         .min()
     )
+    # ==========================================
+    # FAIR VALUE GAPS (ICT)
+    # ==========================================
+
     data["BullishFVG"] = (
+
         data["Low"]
+
         >
+
         data["High"].shift(2)
+
     )
 
     data["BearishFVG"] = (
+
         data["High"]
+
         <
+
         data["Low"].shift(2)
+
+    )
+
+    # ==========================================
+    # FVG ZONES
+    # ==========================================
+
+    data["BullishFVG_Top"] = (
+
+        data["Low"]
+
+    )
+
+    data["BullishFVG_Bottom"] = (
+
+        data["High"].shift(2)
+
+    )
+
+    data["BullishFVG_Gap"] = (
+
+        data["BullishFVG_Top"]
+
+        -
+
+        data["BullishFVG_Bottom"]
+
+    )
+
+    # ------------------------------------------
+
+    data["BearishFVG_Top"] = (
+
+        data["Low"].shift(2)
+
+    )
+
+    data["BearishFVG_Bottom"] = (
+
+        data["High"]
+
+    )
+
+    data["BearishFVG_Gap"] = (
+
+        data["BearishFVG_Top"]
+
+        -
+
+        data["BearishFVG_Bottom"]
+
+    )
+
+    # ==========================================
+    # GAP SIZE VS ATR
+    # ==========================================
+
+    data["BullishFVG_GapATR"] = (
+
+        data["BullishFVG_Gap"]
+
+        /
+
+        data["ATR14"]
+
+    )
+
+    data["BearishFVG_GapATR"] = (
+
+        data["BearishFVG_Gap"]
+
+        /
+
+        data["ATR14"]
+
+    )
+
+    # ==========================================
+    # QUALITY FVG
+    # ==========================================
+
+    data["QUALITY_BULLISH_FVG"] = (
+
+        data["BullishFVG"]
+
+        &
+
+        (data["BullishFVG_GapATR"] >= 0.25)
+
+        &
+
+        (data["BullishFVG_GapATR"] <= 2.0)
+
+    )
+
+    data["QUALITY_BEARISH_FVG"] = (
+
+        data["BearishFVG"]
+
+        &
+
+        (data["BearishFVG_GapATR"] >= 0.25)
+
+        &
+
+        (data["BearishFVG_GapATR"] <= 2.0)
+
     )
     data["PreviousClose"] = (
         data["Close"]
@@ -687,6 +805,24 @@ def compute_features(data):
         &
 
         data["BEARISH_STRUCTURE"]
+
+    )
+
+    # ==================================
+    # RECENT LIQUIDITY SWEEP
+    # ==================================
+
+    data["RECENT_SWEEP"] = (
+
+        data["SWEEP_SWING_LOW"]
+
+        .rolling(5)
+
+        .max()
+
+        .fillna(False)
+
+        .astype(bool)
 
     )
 
