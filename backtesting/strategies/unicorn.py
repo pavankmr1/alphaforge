@@ -78,6 +78,10 @@ class UnicornStrategy(Strategy):
                 self.set_state(
                     StrategyState.WAIT_MSS
                 )
+                self.log_event(
+                    candle,
+                    "SWEEP"
+                )
 
                 return
 
@@ -89,6 +93,10 @@ class UnicornStrategy(Strategy):
 
                 self.set_state(
                     StrategyState.WAIT_HTF_FVG
+                )
+                self.log_event(
+                    candle,
+                    "MSS"
                 )
 
                 return
@@ -122,6 +130,11 @@ class UnicornStrategy(Strategy):
                     StrategyState.TRACK_LTF_FVG
 
                 )
+                self.log_event(
+                    candle,
+                    "HTF_FVG"
+                )
+        
 
     def update_1m(self, candle):
 
@@ -146,6 +159,10 @@ class UnicornStrategy(Strategy):
                 self.set_state(
                     StrategyState.WAIT_RETEST
                 )
+                self.log_event(
+                    candle,
+                    "LTF_FVG"
+                )
 
         # From now on every candle checks for entry
         if self.is_state(StrategyState.WAIT_RETEST):
@@ -155,6 +172,22 @@ class UnicornStrategy(Strategy):
     def get_signals(self):
 
         return self.context.signals
+    # ==========================================================
+    # POP SIGNAL
+    # ==========================================================
+
+    def pop_signal(self):
+
+        """
+        Returns the oldest signal and removes it
+        from the queue.
+        """
+
+        if not self.context.signals:
+
+            return None
+
+        return self.context.signals.pop(0)
 
     def reset(self):
 
@@ -166,6 +199,43 @@ class UnicornStrategy(Strategy):
 
         self.day_high = None
 
+    # ==========================================================
+    # RESET STATE
+    # ==========================================================
+
+    def reset_state(self):
+
+        """
+        Reset ONLY the strategy state after a trade.
+
+        Keeps:
+            - Signals
+            - Event Log
+            - Statistics
+
+        Clears:
+            - Current setup
+            - Active FVGs
+            - Current trade context
+        """
+
+        self.set_state(
+            StrategyState.WAIT_SWEEP
+        )
+
+        self.context.latest_sweep = None
+
+        self.context.latest_mss = None
+
+        if hasattr(self.context, "htf_fvg"):
+            self.context.htf_fvg = None
+
+        if hasattr(self.context, "execution_fvg"):
+            self.context.execution_fvg = None
+
+        self.context.active_fvgs.clear()
+
+        self.day_high = None
     # ==========================================================
     # FVG MANAGEMENT
     # ==========================================================
@@ -387,6 +457,18 @@ class UnicornStrategy(Strategy):
 
                 if candle["Close"] < (fvg.bottom - buffer):
                     self.invalidate_fvg(fvg)
+                    self.log_event(
+                        candle,
+                        "FVG_INVALIDATED",
+                        {
+
+                            "top": fvg.top,
+
+                            "bottom": fvg.bottom
+
+                        }
+
+                    )
     
     # ==========================================================
     # RETEST
@@ -425,6 +507,10 @@ class UnicornStrategy(Strategy):
             return
         self.context.execution_fvg = fvg
         self.mark_used(fvg)
+        self.log_event(
+            candle,
+            "ENTRY"
+        )
 
         self.create_signal(
 
@@ -473,6 +559,35 @@ class UnicornStrategy(Strategy):
             fvgs,
 
             key=lambda x: x.created
+
+        )
+    # ==========================================================
+    # EVENT LOG
+    # ==========================================================
+
+    def log_event(
+
+        self,
+
+        candle,
+
+        event,
+
+        details=None
+
+    ):
+
+        self.context.event_log.append(
+
+            {
+
+                "time": candle.name,
+
+                "event": event,
+
+                "details": details
+
+            }
 
         )
     # ==========================================================
@@ -526,3 +641,9 @@ class UnicornStrategy(Strategy):
         )
 
         return signal
+from backtesting.strategy_registry import StrategyRegistry
+
+StrategyRegistry.register(
+    "UNICORN",
+    UnicornStrategy
+)

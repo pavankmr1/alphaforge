@@ -1,0 +1,801 @@
+.
+├── agents
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   └── __init__.cpython-311.pyc
+│   ├── compiler
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   ├── compiler_cache.py
+│   │   ├── compiler_rules.py
+│   │   ├── dsl_validator.py
+│   │   ├── llm_compiler.py
+│   │   ├── recompile_corpus.py
+│   │   └── rule_compiler.py
+│   ├── concept_mining
+│   │   ├── concept_miner.py
+│   │   └── coverage_report.py
+│   ├── corpus_analysis
+│   │   └── strategy_corpus_analyzer.py
+│   ├── evaluator
+│   │   └── __init__.py
+│   ├── extraction
+│   │   └── pdf_extractor.py
+│   ├── ingestion
+│   │   └── __init__.py
+│   ├── ontology_learning
+│   │   ├── ontology_approval_engine.py
+│   │   └── ontology_learning_agent.py
+│   ├── parser
+│   │   └── strategy_parser.py
+│   ├── pine_generator
+│   │   ├── __init__.py
+│   │   └── pine_generator.py
+│   └── telegram
+│       ├── telegram_backfill.py
+│       └── telegram_listener.py
+├── alphaforge_session.session
+├── backtesting
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-311.pyc
+│   │   ├── concept_analyzer.cpython-311.pyc
+│   │   ├── context_engine.cpython-311.pyc
+│   │   ├── dsl_executor.cpython-311.pyc
+│   │   ├── dsl_signal_engine_v2.cpython-311.pyc
+│   │   ├── dsl_signal_engine.cpython-311.pyc
+│   │   ├── event_engine.cpython-311.pyc
+│   │   ├── exit_engine.cpython-311.pyc
+│   │   ├── feature_engine.cpython-311.pyc
+│   │   ├── formula_registry.cpython-311.pyc
+│   │   ├── metrics_engine.cpython-311.pyc
+│   │   ├── mtf_broadcast.cpython-311.pyc
+│   │   ├── mtf_context_engine.cpython-311.pyc
+│   │   ├── mtf_engine.cpython-311.pyc
+│   │   ├── mtf_setup_engine.cpython-311.pyc
+│   │   ├── mtf_trigger_engine.cpython-311.pyc
+│   │   ├── portfolio_engine.cpython-311.pyc
+│   │   ├── qualification_engine.cpython-311.pyc
+│   │   ├── regime_engine.cpython-311.pyc
+│   │   ├── report_generator.cpython-311.pyc
+│   │   ├── rule_mapping_executor.cpython-311.pyc
+│   │   ├── scoring_engine.cpython-311.pyc
+│   │   ├── session_engine.cpython-311.pyc
+│   │   ├── setup_engine_v2.cpython-311.pyc
+│   │   ├── setup_engine.cpython-311.pyc
+│   │   ├── signal_engine.cpython-311.pyc
+│   │   ├── smc_features.cpython-311.pyc
+│   │   ├── state_engine.cpython-311.pyc
+│   │   ├── strategy_adapter.cpython-311.pyc
+│   │   ├── support_resistance.cpython-311.pyc
+│   │   └── trigger_engine.cpython-311.pyc
+│   ├── batch_backtest_v2.py
+│   ├── batch_backtest.py
+│   ├── concept_analyzer.py
+│   ├── context_engine.py
+│   ├── dsl_executor.py
+│   ├── dsl_signal_engine_backup.py
+│   ├── dsl_signal_engine_v2.py
+│   ├── dsl_signal_engine.py
+│   ├── event_engine.py
+│   ├── exit_engine.py
+│   ├── feature_engine.py
+│   ├── fibonacci_features.py
+│   ├── formula_executor.py
+│   ├── formula_registry.py
+│   ├── metrics_engine.py
+│   ├── models.py
+│   ├── mtf_broadcast.py
+│   ├── mtf_context_engine.py
+│   ├── mtf_engine.py
+│   ├── mtf_setup_engine.py
+│   ├── mtf_trigger_engine.py
+│   ├── portfolio_engine.py
+│   ├── qualification_engine.py
+│   ├── regime_engine.py
+│   ├── report_generator.py
+│   ├── rule_mapping_executor.py
+│   ├── run_dsl_strategy.py
+│   ├── run_strategy_backtest.py
+│   ├── scoring_engine.py
+│   ├── session_engine.py
+│   ├── session_features.py
+│   ├── setup_engine_v2.py
+│   ├── setup_engine.py
+│   ├── signal_engine.py
+│   ├── simple_backtest.py
+│   ├── smc_features.py
+│   ├── state_engine.py
+│   ├── state_machine.py
+│   ├── strategies
+│   │   ├── __pycache__
+│   │   └── unicorn.py
+│   ├── strategy_adapter.py
+│   ├── support_resistance.py
+│   ├── test_features.py
+│   └── trigger_engine.py
+├── config
+│   └── settings.py
+├── coverage
+│   ├── dsl_coverage_report.py
+│   ├── missing_feature_ranker.py
+│   └── strategy_coverage_report.py
+├── dashboard
+│   └── __init__.py
+├── data
+│   ├── archive
+│   ├── backtest_reports
+│   │   ├── ICT Liquidity + SMC Trading Strategy.html
+│   │   ├── Mamba FX – 1 Minute Scalping Strategy.html
+│   │   ├── simple_backtest.html
+│   │   └── Umar Punjabi Inspired Crypto & Forex Trading Strategy.html
+│   ├── batch_results
+│   │   ├── leaderboard_2.csv
+│   │   ├── leaderboard.csv
+│   │   ├── strategy_scorecard.csv
+│   │   └── top_strategies.csv
+│   ├── compiled_strategies
+│   │   ├── 10EMA INTRADAY STRATEGY.json
+│   │   ├── 200EMA DEVANSHRAI STRATEGY.json
+│   │   ├── 200EMA TRADING STRATEGY.json
+│   │   ├── 3 MOVING AVERAGE TRADING SETUP.json
+│   │   ├── 5EMA TRADING STRATEGY POWEROFSTOCKS.json
+│   │   ├── 9_20EMA STRATEGY.json
+│   │   ├── 9,15,200 EMA TRADING STRATEGY.json
+│   │   ├── 9&15 EMA DETAILED STRATEGY.json
+│   │   ├── 9&15EMA MAYANKRAJ STRATEGY.json
+│   │   ├── 9&20EMA STRATEGY.json
+│   │   ├── ANISH SINGH VWAP STRATEGY.json
+│   │   ├── BEST FIBONACCI STRATEGY.json
+│   │   ├── BEST INTRADAY STRATEGY.json
+│   │   ├── BEST SCALPING STRATEGY MAMBAFX.json
+│   │   ├── BIG BAR STRATEGY.json
+│   │   ├── BLACKBOX STRATEGY.json
+│   │   ├── BLACKBOX TRADING STRATEGY.json
+│   │   ├── BOOMING BULLS STRATEGY.json
+│   │   ├── BOX TRADING STRATEGY.json
+│   │   ├── CANDLESTICK WICK STRATEGY.json
+│   │   ├── Coffee Can Investing by Saurabh Mukherjea _.json
+│   │   ├── EMA + Trendline Breakout Trading Strategy.json
+│   │   ├── EMA Crossover Trading Strategy (1).json
+│   │   ├── EMA REJECTION STRATEGY.json
+│   │   ├── EMA+Pivot Intraday Strategy.json
+│   │   ├── FABIO VALENTINI SCALPING STRATEGY.json
+│   │   ├── FARE VALUE GAP.json
+│   │   ├── FIBONACCI TRADING STRATEGY.json
+│   │   ├── FXAlexG Swing Trading Strategy (Step-by-Step Guide).json
+│   │   ├── GAUTAM JHA STRATEGY.json
+│   │   ├── GAUTAM JHA TRADING STRATEGY.json
+│   │   ├── GAUTAMJHA TRADING STRATEGY.json
+│   │   ├── GUARDEER SMC STRATEGY.json
+│   │   ├── ICT,SMC TRADING STRATEGY GUARDEER.json
+│   │   ├── Inna Rosputnia STRATEGY.json
+│   │   ├── JADECAP TRADING STRATEGY.json
+│   │   ├── LIQUIDITY SWEEP STRATEGY.json
+│   │   ├── LITTLE RIZZY TRADING STRATEGY.json
+│   │   ├── london_breakout_strategy.json
+│   │   ├── Mamba_FX_1_Min_Scalping_Strategy.json
+│   │   ├── MAMBAFX NY SESSION STRATEGY.json
+│   │   ├── MAMBAFX PREMIUM STRATEGY.json
+│   │   ├── Measured move trend strategy.json
+│   │   ├── ORB STRATEGY ANISH BOOMING BULLS.json
+│   │   ├── PHOTON TRADING STRATEGY.json
+│   │   ├── POWER OF STOCKS STRATEGY.json
+│   │   ├── POWEROFSTOCKS 5MIN STRATEGY.json
+│   │   ├── STOCKBURNER RSI DIVERGENCE STRATEGY.json
+│   │   ├── Stocks to Riches by Parag Parikh _.json
+│   │   ├── SWAPPY TRADING 3C STRATEGY.json
+│   │   ├── SWING TRADING STRATEGY FXALEXG.json
+│   │   ├── THE TRADING GEEK STRATEGY.json
+│   │   ├── THETRADEROOM EMA STRATEGY.json
+│   │   ├── TIMEFRAME BASED STRATEGY.json
+│   │   ├── TOM HAUGAARD TRADING STRATEGY.json
+│   │   ├── TOM VORWALD TRADING STRATEGY.json
+│   │   ├── TORI TRADES TRENDLINE STRATEGY.json
+│   │   ├── TORITRADES TRENDLINE STRATEGY.json
+│   │   ├── TRADERS PARADISE BB STRATEGY.json
+│   │   ├── TRADEWITHSUNIL 5MIN STRATEGY.json
+│   │   ├── TRADEWITHSUNIL STRATEGY WITH BACKTEST RESULTS.json
+│   │   ├── Trading in the Zone by Mark Douglas.json
+│   │   ├── TRENDLINE BASED STRATEGY.json
+│   │   ├── UMAR PUNJABI GOLD STRATEGY.json
+│   │   ├── UMAR PUNJABI ORDERBLOCK STRATEGY.json
+│   │   └── VWAP STRATEGY OF DEVANSHRAIYT .json
+│   ├── compiled_strategies_v2
+│   │   ├── 10EMA INTRADAY STRATEGY.json
+│   │   ├── 200EMA DEVANSHRAI STRATEGY.json
+│   │   ├── 200EMA TRADING STRATEGY.json
+│   │   ├── 3 MOVING AVERAGE TRADING SETUP.json
+│   │   ├── 5EMA TRADING STRATEGY POWEROFSTOCKS.json
+│   │   ├── 9_20EMA STRATEGY.json
+│   │   ├── 9,15,200 EMA TRADING STRATEGY.json
+│   │   ├── 9&15 EMA DETAILED STRATEGY.json
+│   │   ├── 9&15EMA MAYANKRAJ STRATEGY.json
+│   │   ├── 9&20EMA STRATEGY.json
+│   │   ├── ANISH SINGH VWAP STRATEGY.json
+│   │   ├── BEST FIBONACCI STRATEGY.json
+│   │   ├── BEST INTRADAY STRATEGY.json
+│   │   ├── BEST SCALPING STRATEGY MAMBAFX.json
+│   │   ├── BIG BAR STRATEGY.json
+│   │   ├── BLACKBOX STRATEGY.json
+│   │   ├── BLACKBOX TRADING STRATEGY.json
+│   │   ├── BOOMING BULLS STRATEGY.json
+│   │   ├── BOX TRADING STRATEGY.json
+│   │   ├── CANDLESTICK WICK STRATEGY.json
+│   │   ├── Coffee Can Investing by Saurabh Mukherjea _.json
+│   │   ├── EMA + Trendline Breakout Trading Strategy.json
+│   │   ├── EMA Crossover Trading Strategy (1).json
+│   │   ├── EMA REJECTION STRATEGY.json
+│   │   ├── EMA+Pivot Intraday Strategy.json
+│   │   ├── FABIO VALENTINI SCALPING STRATEGY.json
+│   │   ├── FARE VALUE GAP.json
+│   │   ├── FIBONACCI TRADING STRATEGY.json
+│   │   ├── FXAlexG Swing Trading Strategy (Step-by-Step Guide).json
+│   │   ├── GAUTAM JHA STRATEGY.json
+│   │   ├── GAUTAM JHA TRADING STRATEGY.json
+│   │   ├── GAUTAMJHA TRADING STRATEGY.json
+│   │   ├── GUARDEER SMC STRATEGY.json
+│   │   ├── ICT,SMC TRADING STRATEGY GUARDEER.json
+│   │   ├── Inna Rosputnia STRATEGY.json
+│   │   ├── JADECAP TRADING STRATEGY.json
+│   │   ├── LIQUIDITY SWEEP STRATEGY.json
+│   │   ├── LITTLE RIZZY TRADING STRATEGY.json
+│   │   ├── london_breakout_strategy.json
+│   │   ├── Mamba_FX_1_Min_Scalping_Strategy.json
+│   │   ├── MAMBAFX NY SESSION STRATEGY.json
+│   │   ├── MAMBAFX PREMIUM STRATEGY.json
+│   │   ├── Measured move trend strategy.json
+│   │   ├── ORB STRATEGY ANISH BOOMING BULLS.json
+│   │   ├── PHOTON TRADING STRATEGY.json
+│   │   ├── POWER OF STOCKS STRATEGY.json
+│   │   ├── POWEROFSTOCKS 5MIN STRATEGY.json
+│   │   ├── STOCKBURNER RSI DIVERGENCE STRATEGY.json
+│   │   ├── Stocks to Riches by Parag Parikh _.json
+│   │   ├── SWAPPY TRADING 3C STRATEGY.json
+│   │   ├── SWING TRADING STRATEGY FXALEXG.json
+│   │   ├── THE TRADING GEEK STRATEGY.json
+│   │   ├── THETRADEROOM EMA STRATEGY.json
+│   │   ├── TIMEFRAME BASED STRATEGY.json
+│   │   ├── TOM HAUGAARD TRADING STRATEGY.json
+│   │   ├── TOM VORWALD TRADING STRATEGY.json
+│   │   ├── TORI TRADES TRENDLINE STRATEGY.json
+│   │   ├── TORITRADES TRENDLINE STRATEGY.json
+│   │   ├── TRADERS PARADISE BB STRATEGY.json
+│   │   ├── TRADEWITHSUNIL 5MIN STRATEGY.json
+│   │   ├── TRADEWITHSUNIL STRATEGY WITH BACKTEST RESULTS.json
+│   │   ├── Trading in the Zone by Mark Douglas.json
+│   │   ├── TRENDLINE BASED STRATEGY.json
+│   │   ├── UMAR PUNJABI GOLD STRATEGY.json
+│   │   ├── UMAR PUNJABI ORDERBLOCK STRATEGY.json
+│   │   └── VWAP STRATEGY OF DEVANSHRAIYT .json
+│   ├── compiled_strategies_v3
+│   │   ├── 10EMA INTRADAY STRATEGY.json
+│   │   ├── 200EMA DEVANSHRAI STRATEGY.json
+│   │   ├── 200EMA TRADING STRATEGY.json
+│   │   ├── 3 MOVING AVERAGE TRADING SETUP.json
+│   │   ├── 5EMA TRADING STRATEGY POWEROFSTOCKS.json
+│   │   ├── 9_20EMA STRATEGY.json
+│   │   ├── 9,15,200 EMA TRADING STRATEGY.json
+│   │   ├── 9&15 EMA DETAILED STRATEGY.json
+│   │   ├── 9&15EMA MAYANKRAJ STRATEGY.json
+│   │   ├── 9&20EMA STRATEGY.json
+│   │   ├── ANISH SINGH VWAP STRATEGY.json
+│   │   ├── BEST FIBONACCI STRATEGY.json
+│   │   ├── BEST INTRADAY STRATEGY.json
+│   │   ├── BEST SCALPING STRATEGY MAMBAFX.json
+│   │   ├── BIG BAR STRATEGY.json
+│   │   ├── BLACKBOX STRATEGY.json
+│   │   ├── BLACKBOX TRADING STRATEGY.json
+│   │   ├── BOOMING BULLS STRATEGY.json
+│   │   ├── BOX TRADING STRATEGY.json
+│   │   ├── CANDLESTICK WICK STRATEGY.json
+│   │   ├── Coffee Can Investing by Saurabh Mukherjea _.json
+│   │   ├── EMA + Trendline Breakout Trading Strategy.json
+│   │   ├── EMA Crossover Trading Strategy (1).json
+│   │   ├── EMA REJECTION STRATEGY.json
+│   │   ├── EMA+Pivot Intraday Strategy.json
+│   │   ├── FABIO VALENTINI SCALPING STRATEGY.json
+│   │   ├── FARE VALUE GAP.json
+│   │   ├── FIBONACCI TRADING STRATEGY.json
+│   │   ├── FXAlexG Swing Trading Strategy (Step-by-Step Guide).json
+│   │   ├── GAUTAM JHA STRATEGY.json
+│   │   ├── GAUTAM JHA TRADING STRATEGY.json
+│   │   ├── GAUTAMJHA TRADING STRATEGY.json
+│   │   ├── GUARDEER SMC STRATEGY.json
+│   │   ├── ICT,SMC TRADING STRATEGY GUARDEER.json
+│   │   ├── Inna Rosputnia STRATEGY.json
+│   │   ├── JADECAP TRADING STRATEGY.json
+│   │   ├── LIQUIDITY SWEEP STRATEGY.json
+│   │   ├── LITTLE RIZZY TRADING STRATEGY.json
+│   │   ├── london_breakout_strategy.json
+│   │   ├── Mamba_FX_1_Min_Scalping_Strategy.json
+│   │   ├── MAMBAFX NY SESSION STRATEGY.json
+│   │   ├── MAMBAFX PREMIUM STRATEGY.json
+│   │   ├── Measured move trend strategy.json
+│   │   ├── ORB STRATEGY ANISH BOOMING BULLS.json
+│   │   ├── PHOTON TRADING STRATEGY.json
+│   │   ├── POWER OF STOCKS STRATEGY.json
+│   │   ├── POWEROFSTOCKS 5MIN STRATEGY.json
+│   │   ├── STOCKBURNER RSI DIVERGENCE STRATEGY.json
+│   │   ├── Stocks to Riches by Parag Parikh _.json
+│   │   ├── SWAPPY TRADING 3C STRATEGY.json
+│   │   ├── SWING TRADING STRATEGY FXALEXG.json
+│   │   ├── THE TRADING GEEK STRATEGY.json
+│   │   ├── THETRADEROOM EMA STRATEGY.json
+│   │   ├── TIMEFRAME BASED STRATEGY.json
+│   │   ├── TOM HAUGAARD TRADING STRATEGY.json
+│   │   ├── TOM VORWALD TRADING STRATEGY.json
+│   │   ├── TORI TRADES TRENDLINE STRATEGY.json
+│   │   ├── TORITRADES TRENDLINE STRATEGY.json
+│   │   ├── TRADERS PARADISE BB STRATEGY.json
+│   │   ├── TRADEWITHSUNIL 5MIN STRATEGY.json
+│   │   ├── TRADEWITHSUNIL STRATEGY WITH BACKTEST RESULTS.json
+│   │   ├── Trading in the Zone by Mark Douglas.json
+│   │   ├── TRENDLINE BASED STRATEGY.json
+│   │   ├── UMAR PUNJABI GOLD STRATEGY.json
+│   │   ├── UMAR PUNJABI ORDERBLOCK STRATEGY.json
+│   │   └── VWAP STRATEGY OF DEVANSHRAIYT .json
+│   ├── compiler_cache.json
+│   ├── concept_examples.json
+│   ├── concept_inventory.json
+│   ├── data_test.py
+│   ├── extracted_text
+│   │   ├── 10EMA INTRADAY STRATEGY.txt
+│   │   ├── 200EMA DEVANSHRAI STRATEGY.txt
+│   │   ├── 200EMA TRADING STRATEGY.txt
+│   │   ├── 3 MOVING AVERAGE TRADING SETUP.txt
+│   │   ├── 5EMA TRADING STRATEGY POWEROFSTOCKS.txt
+│   │   ├── 9_20EMA STRATEGY.txt
+│   │   ├── 9,15,200 EMA TRADING STRATEGY.txt
+│   │   ├── 9&15 EMA DETAILED STRATEGY.txt
+│   │   ├── 9&15EMA MAYANKRAJ STRATEGY.txt
+│   │   ├── 9&20EMA STRATEGY.txt
+│   │   ├── ANISH SINGH VWAP STRATEGY.txt
+│   │   ├── BEST FIBONACCI STRATEGY.txt
+│   │   ├── BEST INTRADAY STRATEGY.txt
+│   │   ├── BEST SCALPING STRATEGY MAMBAFX.txt
+│   │   ├── BIG BAR STRATEGY.txt
+│   │   ├── BLACKBOX STRATEGY.txt
+│   │   ├── BLACKBOX TRADING STRATEGY.txt
+│   │   ├── BOOMING BULLS STRATEGY.txt
+│   │   ├── BOX TRADING STRATEGY.txt
+│   │   ├── CANDLESTICK WICK STRATEGY.txt
+│   │   ├── Coffee Can Investing by Saurabh Mukherjea _.txt
+│   │   ├── EMA + Trendline Breakout Trading Strategy.txt
+│   │   ├── EMA Crossover Trading Strategy (1).txt
+│   │   ├── EMA REJECTION STRATEGY.txt
+│   │   ├── EMA+Pivot Intraday Strategy.txt
+│   │   ├── FABIO VALENTINI SCALPING STRATEGY.txt
+│   │   ├── FARE VALUE GAP.txt
+│   │   ├── FIBONACCI TRADING STRATEGY.txt
+│   │   ├── FXAlexG Swing Trading Strategy (Step-by-Step Guide).txt
+│   │   ├── GAUTAM JHA STRATEGY.txt
+│   │   ├── GAUTAM JHA TRADING STRATEGY.txt
+│   │   ├── GAUTAMJHA TRADING STRATEGY.txt
+│   │   ├── GUARDEER SMC STRATEGY.txt
+│   │   ├── ICT,SMC TRADING STRATEGY GUARDEER.txt
+│   │   ├── Inna Rosputnia STRATEGY.txt
+│   │   ├── JADECAP TRADING STRATEGY.txt
+│   │   ├── LIQUIDITY SWEEP STRATEGY.txt
+│   │   ├── LITTLE RIZZY TRADING STRATEGY.txt
+│   │   ├── london_breakout_strategy.txt
+│   │   ├── Mamba_FX_1_Min_Scalping_Strategy.txt
+│   │   ├── MAMBAFX NY SESSION STRATEGY.txt
+│   │   ├── MAMBAFX PREMIUM STRATEGY.txt
+│   │   ├── Measured move trend strategy.txt
+│   │   ├── ORB STRATEGY ANISH BOOMING BULLS.txt
+│   │   ├── PHOTON TRADING STRATEGY.txt
+│   │   ├── POWER OF STOCKS STRATEGY.txt
+│   │   ├── POWEROFSTOCKS 5MIN STRATEGY.txt
+│   │   ├── STOCKBURNER RSI DIVERGENCE STRATEGY.txt
+│   │   ├── Stocks to Riches by Parag Parikh _.txt
+│   │   ├── SWAPPY TRADING 3C STRATEGY.txt
+│   │   ├── SWING TRADING STRATEGY FXALEXG.txt
+│   │   ├── The Intelligent Investor - BENJAMIN GRAHAM.txt
+│   │   ├── THE TRADING GEEK STRATEGY.txt
+│   │   ├── THETRADEROOM EMA STRATEGY.txt
+│   │   ├── TIMEFRAME BASED STRATEGY.txt
+│   │   ├── TOM HAUGAARD TRADING STRATEGY.txt
+│   │   ├── TOM VORWALD TRADING STRATEGY.txt
+│   │   ├── TORI TRADES TRENDLINE STRATEGY.txt
+│   │   ├── TORITRADES TRENDLINE STRATEGY.txt
+│   │   ├── TRADERS PARADISE BB STRATEGY.txt
+│   │   ├── TRADEWITHSUNIL 5MIN STRATEGY.txt
+│   │   ├── TRADEWITHSUNIL STRATEGY WITH BACKTEST RESULTS.txt
+│   │   ├── Trading in the Zone by Mark Douglas.txt
+│   │   ├── TRENDLINE BASED STRATEGY.txt
+│   │   ├── UMAR PUNJABI GOLD STRATEGY.txt
+│   │   ├── UMAR PUNJABI ORDERBLOCK STRATEGY.txt
+│   │   └── VWAP STRATEGY OF DEVANSHRAIYT .txt
+│   ├── generated_pines
+│   │   ├── 10EMA INTRADAY STRATEGY.pine
+│   │   ├── 200EMA DEVANSHRAI STRATEGY.pine
+│   │   ├── 200EMA TRADING STRATEGY.pine
+│   │   ├── 3 MOVING AVERAGE TRADING SETUP.pine
+│   │   ├── 5EMA TRADING STRATEGY POWEROFSTOCKS.pine
+│   │   ├── 9_20EMA STRATEGY.pine
+│   │   ├── 9,15,200 EMA TRADING STRATEGY.pine
+│   │   ├── 9&15 EMA DETAILED STRATEGY.pine
+│   │   ├── 9&15EMA MAYANKRAJ STRATEGY.pine
+│   │   ├── 9&20EMA STRATEGY.pine
+│   │   ├── ANISH SINGH VWAP STRATEGY.pine
+│   │   ├── BEST INTRADAY STRATEGY.pine
+│   │   ├── BEST SCALPING STRATEGY MAMBAFX.pine
+│   │   ├── BIG BAR STRATEGY.pine
+│   │   ├── BLACKBOX TRADING STRATEGY.pine
+│   │   ├── BOOMING BULLS STRATEGY.pine
+│   │   ├── BOX TRADING STRATEGY.pine
+│   │   ├── CANDLESTICK WICK STRATEGY.pine
+│   │   ├── Coffee Can Investing by Saurabh Mukherjea _.pine
+│   │   ├── EMA + Trendline Breakout Trading Strategy.pine
+│   │   ├── EMA Crossover Trading Strategy (1).pine
+│   │   ├── EMA REJECTION STRATEGY.pine
+│   │   ├── EMA+Pivot Intraday Strategy.pine
+│   │   ├── FARE VALUE GAP.pine
+│   │   ├── FIBONACCI TRADING STRATEGY.pine
+│   │   ├── FXAlexG Swing Trading Strategy (Step-by-Step Guide).pine
+│   │   ├── GAUTAM JHA TRADING STRATEGY.pine
+│   │   ├── GUARDEER SMC STRATEGY.pine
+│   │   ├── ICT,SMC TRADING STRATEGY GUARDEER.pine
+│   │   ├── JADECAP TRADING STRATEGY.pine
+│   │   ├── LIQUIDITY SWEEP STRATEGY.pine
+│   │   ├── london_breakout_strategy.pine
+│   │   ├── Mamba_FX_1_Min_Scalping_Strategy.pine
+│   │   ├── MAMBAFX NY SESSION STRATEGY.pine
+│   │   ├── MAMBAFX PREMIUM STRATEGY.pine
+│   │   ├── PHOTON TRADING STRATEGY.pine
+│   │   ├── POWER OF STOCKS STRATEGY.pine
+│   │   ├── POWEROFSTOCKS 5MIN STRATEGY.pine
+│   │   ├── Stocks to Riches by Parag Parikh _.pine
+│   │   ├── SWAPPY TRADING 3C STRATEGY.pine
+│   │   ├── SWING TRADING STRATEGY FXALEXG.pine
+│   │   ├── THE TRADING GEEK STRATEGY.pine
+│   │   ├── THETRADEROOM EMA STRATEGY.pine
+│   │   ├── TIMEFRAME BASED STRATEGY.pine
+│   │   ├── TORI TRADES TRENDLINE STRATEGY.pine
+│   │   ├── TRADERS PARADISE BB STRATEGY.pine
+│   │   ├── TRADEWITHSUNIL 5MIN STRATEGY.pine
+│   │   ├── TRADEWITHSUNIL STRATEGY WITH BACKTEST RESULTS.pine
+│   │   ├── Trading in the Zone by Mark Douglas.pine
+│   │   ├── TRENDLINE BASED STRATEGY.pine
+│   │   ├── UMAR PUNJABI GOLD STRATEGY.pine
+│   │   ├── UMAR PUNJABI ORDERBLOCK STRATEGY.pine
+│   │   └── VWAP STRATEGY OF DEVANSHRAIYT .pine
+│   ├── nifty_1m_dhan.csv
+│   ├── ontology_proposals
+│   ├── parsed_strategies
+│   │   ├── 10EMA INTRADAY STRATEGY.json
+│   │   ├── 200EMA DEVANSHRAI STRATEGY.json
+│   │   ├── 200EMA TRADING STRATEGY.json
+│   │   ├── 3 MOVING AVERAGE TRADING SETUP.json
+│   │   ├── 5EMA TRADING STRATEGY POWEROFSTOCKS.json
+│   │   ├── 9_20EMA STRATEGY.json
+│   │   ├── 9,15,200 EMA TRADING STRATEGY.json
+│   │   ├── 9&15 EMA DETAILED STRATEGY.json
+│   │   ├── 9&15EMA MAYANKRAJ STRATEGY.json
+│   │   ├── 9&20EMA STRATEGY.json
+│   │   ├── ANISH SINGH VWAP STRATEGY.json
+│   │   ├── BEST FIBONACCI STRATEGY.json
+│   │   ├── BEST INTRADAY STRATEGY.json
+│   │   ├── BEST SCALPING STRATEGY MAMBAFX.json
+│   │   ├── BIG BAR STRATEGY.json
+│   │   ├── BLACKBOX STRATEGY.json
+│   │   ├── BLACKBOX TRADING STRATEGY.json
+│   │   ├── BOOMING BULLS STRATEGY.json
+│   │   ├── BOX TRADING STRATEGY.json
+│   │   ├── CANDLESTICK WICK STRATEGY.json
+│   │   ├── Coffee Can Investing by Saurabh Mukherjea _.json
+│   │   ├── EMA + Trendline Breakout Trading Strategy.json
+│   │   ├── EMA Crossover Trading Strategy (1).json
+│   │   ├── EMA REJECTION STRATEGY.json
+│   │   ├── EMA+Pivot Intraday Strategy.json
+│   │   ├── FABIO VALENTINI SCALPING STRATEGY.json
+│   │   ├── FARE VALUE GAP.json
+│   │   ├── FIBONACCI TRADING STRATEGY.json
+│   │   ├── FXAlexG Swing Trading Strategy (Step-by-Step Guide).json
+│   │   ├── GAUTAM JHA STRATEGY.json
+│   │   ├── GAUTAM JHA TRADING STRATEGY.json
+│   │   ├── GAUTAMJHA TRADING STRATEGY.json
+│   │   ├── GUARDEER SMC STRATEGY.json
+│   │   ├── ICT,SMC TRADING STRATEGY GUARDEER.json
+│   │   ├── Inna Rosputnia STRATEGY.json
+│   │   ├── JADECAP TRADING STRATEGY.json
+│   │   ├── LIQUIDITY SWEEP STRATEGY.json
+│   │   ├── LITTLE RIZZY TRADING STRATEGY.json
+│   │   ├── london_breakout_strategy.json
+│   │   ├── Mamba_FX_1_Min_Scalping_Strategy.json
+│   │   ├── MAMBAFX NY SESSION STRATEGY.json
+│   │   ├── MAMBAFX PREMIUM STRATEGY.json
+│   │   ├── Measured move trend strategy.json
+│   │   ├── ORB STRATEGY ANISH BOOMING BULLS.json
+│   │   ├── PHOTON TRADING STRATEGY.json
+│   │   ├── POWER OF STOCKS STRATEGY.json
+│   │   ├── POWEROFSTOCKS 5MIN STRATEGY.json
+│   │   ├── STOCKBURNER RSI DIVERGENCE STRATEGY.json
+│   │   ├── Stocks to Riches by Parag Parikh _.json
+│   │   ├── SWAPPY TRADING 3C STRATEGY.json
+│   │   ├── SWING TRADING STRATEGY FXALEXG.json
+│   │   ├── THE TRADING GEEK STRATEGY.json
+│   │   ├── THETRADEROOM EMA STRATEGY.json
+│   │   ├── TIMEFRAME BASED STRATEGY.json
+│   │   ├── TOM HAUGAARD TRADING STRATEGY.json
+│   │   ├── TOM VORWALD TRADING STRATEGY.json
+│   │   ├── TORI TRADES TRENDLINE STRATEGY.json
+│   │   ├── TORITRADES TRENDLINE STRATEGY.json
+│   │   ├── TRADERS PARADISE BB STRATEGY.json
+│   │   ├── TRADEWITHSUNIL 5MIN STRATEGY.json
+│   │   ├── TRADEWITHSUNIL STRATEGY WITH BACKTEST RESULTS.json
+│   │   ├── Trading in the Zone by Mark Douglas.json
+│   │   ├── TRENDLINE BASED STRATEGY.json
+│   │   ├── UMAR PUNJABI GOLD STRATEGY.json
+│   │   ├── UMAR PUNJABI ORDERBLOCK STRATEGY.json
+│   │   └── VWAP STRATEGY OF DEVANSHRAIYT .json
+│   ├── processed
+│   │   ├── nifty_15m_master.csv
+│   │   └── nifty_5m_master.csv
+│   ├── raw
+│   │   ├── nifty_1m_5y_master.csv
+│   │   └── nifty_1m_master.csv
+│   └── raw_pdfs
+│       ├── 10EMA INTRADAY STRATEGY.pdf
+│       ├── 200EMA DEVANSHRAI STRATEGY.pdf
+│       ├── 200EMA TRADING STRATEGY.pdf
+│       ├── 3 MOVING AVERAGE TRADING SETUP.pdf
+│       ├── 5EMA TRADING STRATEGY POWEROFSTOCKS.pdf
+│       ├── 9_20EMA STRATEGY.pdf
+│       ├── 9,15,200 EMA TRADING STRATEGY.pdf
+│       ├── 9&15 EMA DETAILED STRATEGY.pdf
+│       ├── 9&15EMA MAYANKRAJ STRATEGY.pdf
+│       ├── 9&20EMA STRATEGY.pdf
+│       ├── ANISH SINGH VWAP STRATEGY.pdf
+│       ├── BEST FIBONACCI STRATEGY.pdf
+│       ├── BEST INTRADAY STRATEGY.pdf
+│       ├── BEST SCALPING STRATEGY MAMBAFX.pdf
+│       ├── BIG BAR STRATEGY.pdf
+│       ├── BLACKBOX STRATEGY.pdf
+│       ├── BLACKBOX TRADING STRATEGY.pdf
+│       ├── BOOMING BULLS STRATEGY.pdf
+│       ├── BOX TRADING STRATEGY.pdf
+│       ├── CANDLESTICK WICK STRATEGY.pdf
+│       ├── Coffee Can Investing by Saurabh Mukherjea _.pdf
+│       ├── EMA + Trendline Breakout Trading Strategy.pdf
+│       ├── EMA Crossover Trading Strategy (1).pdf
+│       ├── EMA REJECTION STRATEGY.pdf
+│       ├── EMA+Pivot Intraday Strategy.pdf
+│       ├── FABIO VALENTINI SCALPING STRATEGY.pdf
+│       ├── FARE VALUE GAP.pdf
+│       ├── FIBONACCI TRADING STRATEGY.pdf
+│       ├── FXAlexG Swing Trading Strategy (Step-by-Step Guide).pdf
+│       ├── GAUTAM JHA STRATEGY.pdf
+│       ├── GAUTAM JHA TRADING STRATEGY.pdf
+│       ├── GAUTAMJHA TRADING STRATEGY.pdf
+│       ├── GUARDEER SMC STRATEGY.pdf
+│       ├── ICT,SMC TRADING STRATEGY GUARDEER.pdf
+│       ├── Inna Rosputnia STRATEGY.pdf
+│       ├── JADECAP TRADING STRATEGY.pdf
+│       ├── LIQUIDITY SWEEP STRATEGY.pdf
+│       ├── LITTLE RIZZY TRADING STRATEGY.pdf
+│       ├── london_breakout_strategy.pdf
+│       ├── Mamba_FX_1_Min_Scalping_Strategy.pdf
+│       ├── MAMBAFX NY SESSION STRATEGY.pdf
+│       ├── MAMBAFX PREMIUM STRATEGY.pdf
+│       ├── Measured move trend strategy.pdf
+│       ├── ORB STRATEGY ANISH BOOMING BULLS.pdf
+│       ├── PHOTON TRADING STRATEGY.pdf
+│       ├── POWER OF STOCKS STRATEGY.pdf
+│       ├── POWEROFSTOCKS 5MIN STRATEGY.pdf
+│       ├── STOCKBURNER RSI DIVERGENCE STRATEGY.pdf
+│       ├── Stocks to Riches by Parag Parikh _.pdf
+│       ├── SWAPPY TRADING 3C STRATEGY.pdf
+│       ├── SWING TRADING STRATEGY FXALEXG.pdf
+│       ├── The Intelligent Investor - BENJAMIN GRAHAM.pdf
+│       ├── THE TRADING GEEK STRATEGY.pdf
+│       ├── THETRADEROOM EMA STRATEGY.pdf
+│       ├── TIMEFRAME BASED STRATEGY.pdf
+│       ├── TOM HAUGAARD TRADING STRATEGY.pdf
+│       ├── TOM VORWALD TRADING STRATEGY.pdf
+│       ├── TORI TRADES TRENDLINE STRATEGY.pdf
+│       ├── TORITRADES TRENDLINE STRATEGY.pdf
+│       ├── TRADERS PARADISE BB STRATEGY.pdf
+│       ├── TRADEWITHSUNIL 5MIN STRATEGY.pdf
+│       ├── TRADEWITHSUNIL STRATEGY WITH BACKTEST RESULTS.pdf
+│       ├── Trading in the Zone by Mark Douglas.pdf
+│       ├── TRENDLINE BASED STRATEGY.pdf
+│       ├── UMAR PUNJABI GOLD STRATEGY.pdf
+│       ├── UMAR PUNJABI ORDERBLOCK STRATEGY.pdf
+│       └── VWAP STRATEGY OF DEVANSHRAIYT .pdf
+├── docker
+├── docker-compose.yml
+├── execution
+│   └── state_machine.py
+├── experiments
+│   ├── comparison_engine.py
+│   ├── experiment_tracker.py
+│   ├── insight_engine.py
+│   ├── portfolio_allocator.py
+│   ├── regime_detector.py
+│   └── strategy_ranker.py
+├── infra
+├── logs
+│   └── alphaforge.log
+├── main.py
+├── Makefile
+├── memory
+│   └── shared_memory.py
+├── notebooks
+├── ontology
+│   ├── __pycache__
+│   │   ├── compiler.cpython-311.pyc
+│   │   ├── dsl_normalizer.cpython-311.pyc
+│   │   └── field_normalizer.cpython-311.pyc
+│   ├── compiler.py
+│   ├── concepts.py
+│   ├── dsl_normalizer.py
+│   ├── dsl_schema.py
+│   ├── field_normalizer.py
+│   ├── normalizer.py
+│   ├── rule_registry_backup.json
+│   ├── rule_registry.json
+│   └── trading_concepts.json
+├── orchestration
+│   └── research_graph.py
+├── project_setup.txt
+├── PROJECT_STATUS.md
+├── pyproject.toml
+├── README.md
+├── requirements
+│   ├── base.txt
+│   └── dev.txt
+├── research
+│   ├── alphaforge_v3_plan.md
+│   ├── atr_distribution_test.py
+│   ├── atr_rr_exit_test.py
+│   ├── bos_test.py
+│   ├── build_data_lake.py
+│   ├── build_master_dataset.py
+│   ├── champion_v2_robustness.py
+│   ├── champion_v2.py
+│   ├── champion_v3_ict.py
+│   ├── champion_v3_score.py
+│   ├── champion_v3.py
+│   ├── champion_v4_fvg.py
+│   ├── check_features.py
+│   ├── compiler_gain_report.py
+│   ├── condition_logic_test.py
+│   ├── context_debug.py
+│   ├── context_engine_test.py
+│   ├── corpus_coverage_report.py
+│   ├── data_validator.py
+│   ├── dhan_data_test.py
+│   ├── dhan_history_probe.py
+│   ├── directional_backtest.py
+│   ├── directional_batch_test.py
+│   ├── download_5y_nifty.py
+│   ├── dsl_inventory.py
+│   ├── dsl_quality_report.py
+│   ├── dsl_validation_report.py
+│   ├── elite_setup_backtest.py
+│   ├── elite_trade_audit.py
+│   ├── entry_filter_test.py
+│   ├── eod_exit_test.py
+│   ├── event_engine_test.py
+│   ├── event_strategy_backtest.py
+│   ├── executor_coverage.py
+│   ├── exit_atr_stop_test.py
+│   ├── exit_comparison.py
+│   ├── exit_optimization.py
+│   ├── exit_optimizer.py
+│   ├── feature_alias_inventory.py
+│   ├── feature_coverage_report.py
+│   ├── feature_frequency_report.py
+│   ├── find_contradictions.py
+│   ├── full_history_champion_v2.py
+│   ├── funnel_report.py
+│   ├── fvg_filter_test.py
+│   ├── fvg_quality_audit.py
+│   ├── hall_of_fame.py
+│   ├── invalid_rule_classifier.py
+│   ├── invalid_rule_inventory_v2.py
+│   ├── invalid_rule_inventory.py
+│   ├── invalid_rule_report.py
+│   ├── liquidity_strategy_backtest.py
+│   ├── liquidity_v2_test.py
+│   ├── long_short_audit.py
+│   ├── missing_feature_frequency.py
+│   ├── mtf_backtest.py
+│   ├── mtf_broadcast_test.py
+│   ├── mtf_context_test.py
+│   ├── mtf_setup_test.py
+│   ├── mtf_trade_debug.py
+│   ├── mtf_trigger_test.py
+│   ├── multi_timeframe_data_test.py
+│   ├── ontology_gap_report.py
+│   ├── precise_entry_backtest.py
+│   ├── qualification_engine_test.py
+│   ├── regime_engine_test.py
+│   ├── remove_contradictions.py
+│   ├── resample_engine.py
+│   ├── robustness_test.py
+│   ├── rr_optimization.py
+│   ├── rule_contribution_report.py
+│   ├── rule_mapping_inventory.py
+│   ├── rule_registry_report.py
+│   ├── rule_role_inventory.py
+│   ├── rule_usage_report.py
+│   ├── sample_invalid_rules.py
+│   ├── score_threshold_backtest.py
+│   ├── scoring_engine_test.py
+│   ├── setup_engine_test.py
+│   ├── setup_engine_v2_test.py
+│   ├── setup_overlap_debug.py
+│   ├── setup_path_debug.py
+│   ├── setup_without_context_test.py
+│   ├── signal_survival_report.py
+│   ├── state_engine_test.py
+│   ├── state_strategy_backtest.py
+│   ├── strategy_candidate_report.py
+│   ├── strategy_diagnostics.py
+│   ├── strategy_direction_report.py
+│   ├── strategy_readiness_report.py
+│   ├── strategy_scorecard.py
+│   ├── strategy_type_classifier.py
+│   ├── strong_bos_test.py
+│   ├── strong_structure_strategy.py
+│   ├── structure_filter_test.py
+│   ├── structure_strategy_backtest.py
+│   ├── sweep_window_optimization.py
+│   ├── swing_detection_test.py
+│   ├── test_directional_strategy.py
+│   ├── test_market_structure_features.py
+│   ├── test_structure_features.py
+│   ├── top_strategy_deep_dive.py
+│   ├── top_strategy_inspector.py
+│   ├── top_unmapped_phrases.py
+│   ├── trade_audit.py
+│   ├── trade_metrics.py
+│   ├── trade_period_audit.py
+│   ├── trailing_stop_backtest.py
+│   ├── trend_liquidity_fusion.py
+│   ├── trigger_engine_test.py
+│   ├── trigger_feature_audit.py
+│   ├── trigger_strategy_backtest.py
+│   ├── unicorn_backtest.py
+│   ├── unicorn_components_test.py
+│   ├── unicorn_cost_test.py
+│   ├── unicorn_engine_test.py
+│   ├── unicorn_engine_validation.py
+│   ├── unicorn_eod_exit.py
+│   ├── unicorn_exit_optimizer.py
+│   ├── unicorn_lookahead_audit.py
+│   ├── unicorn_mtf_discovery.py
+│   ├── unicorn_mtf_probe.py
+│   ├── unicorn_retest_test.py
+│   ├── unicorn_trade_audit.py
+│   ├── unicorn_v2_components.py
+│   ├── unicorn_winner_analysis.py
+│   ├── unsupported_feature_classifier.py
+│   ├── unsupported_features.py
+│   └── v3_exit_optimizer.py
+├── schemas
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-311.pyc
+│   │   ├── __init__.cpython-313.pyc
+│   │   ├── dsl_schema.cpython-311.pyc
+│   │   ├── strategy_schema.cpython-311.pyc
+│   │   └── strategy_schema.cpython-313.pyc
+│   ├── dsl_schema.py
+│   └── strategy_schema.py
+├── structure.txt
+├── tests
+│   ├── __init__.py
+│   ├── test_dsl_executor.py
+│   ├── test_dsl_pipeline.py
+│   ├── test_llm_compiler.py
+│   ├── test_normalizer.py
+│   └── test_parser.py
+├── utils
+│   └── id_generator.py
+└── uv.lock
+
+51 directories, 748 files

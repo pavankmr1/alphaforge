@@ -49,6 +49,18 @@ class LiquiditySweep:
     price: float
 
 
+@dataclass
+class TradeResult:
+
+    exit_time: datetime
+
+    exit_price: float
+
+    pnl: float
+
+    rr: float
+
+    reason: str
 # ============================================================
 # MARKET STRUCTURE SHIFT
 # ============================================================
@@ -110,6 +122,8 @@ class Trade:
 
     rr: float = 0.0
 
+    reason: str = ""
+
 
 # ============================================================
 # STRATEGY CONTEXT
@@ -129,3 +143,5 @@ class StrategyContext:
     active_trade: Optional[Trade] = None
 
     signals: list = field(default_factory=list)
+
+    event_log: list = field(default_factory=list)
