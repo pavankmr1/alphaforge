@@ -48,7 +48,14 @@ python research/run_walk_forward.py \
     --test-months 3
 ```
 
+Run Monte Carlo on a saved experiment:
+```bash
+python research/run_monte_carlo.py \
+    experiments/runs/2026-07-05_001 \
+    --simulations 1000
+```
+
 ## Next
 - Exit Engine V2
-- Monte Carlo Testing
+- Hyperparameter Sweeps
 - Multi Asset Testing
