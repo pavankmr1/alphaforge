@@ -31,7 +31,24 @@ Each run writes immutable artifacts to `experiments/runs/<date>_<number>/`:
 - `report.json`
 - `event_log.json`
 
+Rank saved experiments:
+```bash
+python research/compare_experiments.py \
+    --sort-by total_pnl
+```
+
+Run walk-forward windows:
+```bash
+python research/run_walk_forward.py \
+    --strategy unicorn \
+    --symbol nifty \
+    --start 2021-01-01 \
+    --end 2025-12-31 \
+    --train-months 12 \
+    --test-months 3
+```
+
 ## Next
 - Exit Engine V2
-- Walk Forward Testing
+- Monte Carlo Testing
 - Multi Asset Testing

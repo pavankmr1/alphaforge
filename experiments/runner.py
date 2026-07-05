@@ -289,6 +289,11 @@ def save_json(path, payload):
         )
 
 
+def load_json(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
 def serialize_value(value):
     if is_dataclass(value):
         return serialize_value(asdict(value))
