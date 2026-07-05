@@ -8,6 +8,8 @@ data/*
 !data/.gitkeep
 logs/*
 !logs/.gitkeep
+experiments/runs/*
+!experiments/runs/.gitkeep
 .pytest_cache/
 .ruff_cache/
 *.egg-info/
