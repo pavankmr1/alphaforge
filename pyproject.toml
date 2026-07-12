@@ -33,6 +33,7 @@ dependencies = [
     "coverage==7.4.4",
     "numba==0.61.2",
     "dhanhq>=2.2.0",
+    "pytest>=9.0.3",
 ]
 
 [project.optional-dependencies]

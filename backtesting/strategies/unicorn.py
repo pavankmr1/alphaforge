@@ -36,14 +36,87 @@ class UnicornStrategy(Strategy):
 
     """
 
-    def __init__(self):
+    DEFAULT_CONFIG = {
+
+        # "gap_atr": 0.50,
+
+        "stop_buffer": 0.25,
+
+        "target": "DAY_HIGH",
+
+        "min_volume_ratio": 0.0,
+
+        "require_trend": False,
+
+        "retest_timeout": 20,
+        "min_gap_atr":0.50,
+
+        "max_gap_atr":2.0
+
+    }
+    @classmethod
+    def parameter_space(cls):
+
+        return {
+
+            "min_gap_atr":[
+                0.3,
+                0.4,
+                0.5,
+                0.6,
+                0.7
+            ],
+
+            "max_gap_atr":[
+                1.5,
+                2.0,
+                2.5
+            ],
+
+            "stop_buffer":[
+                0,
+                0.25,
+                0.5
+            ],
+
+            "target":[
+                "DAY_HIGH",
+                "PDH",
+                "2R"
+            ],
+
+            "require_trend":[
+                False,
+                True
+            ]
+
+        }
+
+    def __init__(
+
+        self,
+
+        config=None
+
+    ):
+
+        super().__init__({
+
+            **self.DEFAULT_CONFIG,
+
+            **(config or {})
+
+        })
 
         self.context = StrategyContext()
 
         self.context.state = StrategyState.WAIT_SWEEP
 
         self.fvg_counter = 0
+
         self.day_high = None
+
+        self.previous_day_high = None
     # ==========================================================
     # STATE
     # ==========================================================
@@ -67,6 +140,71 @@ class UnicornStrategy(Strategy):
     def set_day_high(self, value):
 
         self.day_high = value
+
+    def set_previous_day_high(self, value):
+
+        self.previous_day_high = value
+
+    def quality_bullish_fvg(self, candle):
+
+        gap = candle["BullishFVG_GapATR"]
+
+        return (
+
+            candle["QUALITY_BULLISH_FVG"]
+
+            and
+
+            self.config["min_gap_atr"]
+
+            <= gap
+
+            <=
+
+            self.config["max_gap_atr"]
+
+        )
+
+    def resolve_target(
+
+        self,
+
+        entry_price,
+
+        stop,
+
+        candle=None
+
+    ):
+
+        target_mode = self.config["target"]
+
+        if target_mode == "DAY_HIGH":
+
+            return self.day_high
+
+        if target_mode == "PDH":
+            
+
+            if candle is not None and "PreviousDayHigh" in candle.index:
+
+                return candle["PreviousDayHigh"]
+
+            elif self.previous_day_high is None:
+                return self.day_high
+            return self.previous_day_high
+
+        if target_mode == "2R":
+
+            risk = entry_price - stop
+
+            if risk <= 0:
+
+                return None
+
+            return entry_price + (2 * risk)
+
+        return self.day_high
     def update_5m(self, candle):
 
         if self.is_state(StrategyState.WAIT_SWEEP):
@@ -103,7 +241,7 @@ class UnicornStrategy(Strategy):
 
         if self.is_state(StrategyState.WAIT_HTF_FVG):
 
-            if candle["QUALITY_BULLISH_FVG"]:
+            if self.quality_bullish_fvg(candle):
 
                 htf_fvg = self.register_fvg(
 
@@ -144,7 +282,7 @@ class UnicornStrategy(Strategy):
         # Register new 1m FVGs while tracking
         if self.is_state(StrategyState.TRACK_LTF_FVG):
 
-            if candle["QUALITY_BULLISH_FVG"]:
+            if self.quality_bullish_fvg(candle):
 
                 self.register_fvg(
                     direction="bullish",
@@ -199,6 +337,8 @@ class UnicornStrategy(Strategy):
 
         self.day_high = None
 
+        self.previous_day_high = None
+
     # ==========================================================
     # RESET STATE
     # ==========================================================
@@ -236,6 +376,8 @@ class UnicornStrategy(Strategy):
         self.context.active_fvgs.clear()
 
         self.day_high = None
+
+        # self.previous_day_high = None
     # ==========================================================
     # FVG MANAGEMENT
     # ==========================================================
@@ -453,7 +595,7 @@ class UnicornStrategy(Strategy):
                 continue
             if fvg.direction == "bullish":
 
-                buffer = 0.25
+                buffer = self.config["stop_buffer"]
 
                 if candle["Close"] < (fvg.bottom - buffer):
                     self.invalidate_fvg(fvg)
@@ -494,8 +636,7 @@ class UnicornStrategy(Strategy):
             StrategyState.TRADE_ACTIVE
         ):
             return
-        if self.day_high is None:
-            return
+
         fvg = self.latest_valid_fvg()
 
         if fvg is None:
@@ -505,6 +646,25 @@ class UnicornStrategy(Strategy):
         if not self.retest(candle, fvg):
 
             return
+
+        entry_price = candle["Close"]
+
+        stop = fvg.bottom
+
+        target = self.resolve_target(
+
+            entry_price,
+
+            stop,
+
+            candle
+
+        )
+
+        if target is None:
+
+            return
+
         self.context.execution_fvg = fvg
         self.mark_used(fvg)
         self.log_event(
@@ -516,11 +676,11 @@ class UnicornStrategy(Strategy):
 
             entry_time=candle.name,
 
-            entry_price=candle["Close"],
+            entry_price=entry_price,
 
-            stop=fvg.bottom,
+            stop=stop,
 
-            target=self.day_high,
+            target=target,
 
             reason="UNICORN_MTF"
 

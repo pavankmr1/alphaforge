@@ -15,3 +15,36 @@ AI-powered strategy intelligence and quantitative research platform.
 - FastAPI
 - Streamlit
 - PostgreSQL
+
+
+                         ALPHAFORGE
+
+                ┌──────────────────────────┐
+                │     AI Researcher         │
+                └────────────┬─────────────┘
+                             │
+                 Generates Hypotheses
+                             │
+                ┌────────────▼─────────────┐
+                │ Experiment Orchestrator  │
+                └────────────┬─────────────┘
+                             │
+      ┌──────────────────────┼──────────────────────┐
+      ▼                      ▼                      ▼
+ Parameter Sweep      Walk Forward          Monte Carlo
+      ▼                      ▼                      ▼
+                Research Score & Ranking
+                             │
+                ┌────────────▼─────────────┐
+                │ Experiment Database      │
+                └────────────┬─────────────┘
+                             │
+                  Best Validated Strategy
+                             │
+                     Paper Trading
+                             │
+                     Live Trading
+                             │
+                  Continuous Feedback
+                             │
+                      AI Learns Again

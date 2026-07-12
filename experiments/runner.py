@@ -11,7 +11,8 @@ from backtesting.portfolio_engine import PortfolioEngine
 from backtesting.replay_engine import ReplayEngine
 from backtesting.strategy_registry import StrategyRegistry
 from backtesting.strategies import unicorn  # noqa: F401
-
+from experiments.experiment_index import ExperimentIndex
+from experiments.research_score import ResearchScore    
 
 DEFAULT_DATA_PATHS = {
     "nifty": {
@@ -55,7 +56,13 @@ def run_experiment(
     df_1m = compute_features(df_1m)
     df_5m = compute_features(df_5m)
 
-    strategy = StrategyRegistry.create(strategy_name)
+    strategy = StrategyRegistry.create(
+
+    strategy_name,
+
+    config=parameters
+
+    )
     replay = ReplayEngine(strategy)
     replay.run(df_5m, df_1m)
 
@@ -63,6 +70,29 @@ def run_experiment(
     portfolio = PortfolioEngine(trades)
 
     metrics = build_metrics(portfolio)
+    research_score = ResearchScore.score(metrics)
+
+    index = ExperimentIndex()
+
+    index.register({
+
+        "run_id": run_dir.name,
+
+        "strategy": config["strategy"],
+
+        "symbol": config["symbol"],
+
+        "start": config["start"],
+
+        "end": config["end"],
+
+        "research_score": research_score,
+
+        **config["parameters"],
+
+        **metrics,
+
+    })
     report = build_report(
         config=config,
         metrics=metrics,

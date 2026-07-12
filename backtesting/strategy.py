@@ -3,6 +3,10 @@ from abc import ABC, abstractmethod
 
 class Strategy(ABC):
 
+    def __init__(self, config=None):
+
+        self.config = config or {}
+
     @abstractmethod
     def update_5m(self, candle):
         pass

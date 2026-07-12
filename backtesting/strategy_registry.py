@@ -36,9 +36,7 @@ class StrategyRegistry:
 
         name,
 
-        *args,
-
-        **kwargs
+        config=None
 
     ):
 
@@ -56,13 +54,7 @@ class StrategyRegistry:
 
             )
 
-        return strategy(
-
-            *args,
-
-            **kwargs
-
-        )
+        return strategy(config=config)
 
     # ==========================================================
     # LIST
