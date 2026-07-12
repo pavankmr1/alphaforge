@@ -5,10 +5,19 @@ def test_engine_initialization():
 
     engine = ResearchEngine()
 
-    assert engine.runner is not None
+    assert engine.output_root is not None
 
-    assert engine.walk_forward is not None
 
-    assert engine.monte_carlo is not None
+def test_engine_has_api():
 
-    assert engine.comparison is not None
+    engine = ResearchEngine()
+
+    assert callable(engine.run_experiment)
+
+    assert callable(engine.run_walk_forward)
+
+    assert callable(engine.run_monte_carlo)
+
+    assert callable(engine.leaderboard)
+
+    assert callable(engine.compare)

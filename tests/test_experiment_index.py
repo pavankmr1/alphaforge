@@ -1,9 +1,11 @@
 from experiments.experiment_index import ExperimentIndex
 
 
-def test_register():
+def test_register(tmp_path):
 
-    index = ExperimentIndex("tests/tmp_index.csv")
+    index_file = tmp_path / "index.csv"
+
+    index = ExperimentIndex(index_file)
 
     index.register({
 
@@ -16,3 +18,5 @@ def test_register():
     })
 
     assert len(index.df) == 1
+
+    assert index.df.iloc[0]["run_id"] == "001"

@@ -1,155 +1,72 @@
 from pathlib import Path
-from typing import Any, Dict, List, Optional
 
 from loguru import logger
 
-from experiments.runner import ExperimentRunner
-from experiments.comparison_engine import ComparisonEngine
-from experiments.walk_forward import WalkForwardRunner
-from experiments.monte_carlo import MonteCarloAnalyzer
+from experiments.runner import run_experiment
+from experiments.comparison_engine import (
+    compare_runs,
+    rank_runs,
+)
+from experiments.walk_forward import run_walk_forward
+from experiments.monte_carlo import run_monte_carlo
 
 
 class ResearchEngine:
     """
-    AlphaForge V3
+    AlphaForge Research Engine
 
-    Central coordinator for all quantitative research.
-
-    Responsibilities
-    ----------------
-    - Run experiments
-    - Parameter optimization
-    - Walk-forward validation
-    - Monte Carlo validation
-    - Compare experiments
-    - Build research leaderboard
-
-    This class SHOULD NOT contain trading logic.
+    High-level orchestration layer for research workflows.
     """
 
-    def __init__(
-
-        self,
-
-        output_root: str = "experiments/runs"
-
-    ):
+    def __init__(self, output_root="experiments/runs"):
 
         self.output_root = Path(output_root)
 
-        self.runner = ExperimentRunner(
-
-            output_root=self.output_root
-
-        )
-
-        self.comparison = ComparisonEngine()
-
-        self.walk_forward = WalkForwardRunner()
-
-        self.monte_carlo = MonteCarloAnalyzer()
-
-        logger.info(
-
-            "Research Engine initialized."
-
-        )
+        logger.info("Research Engine initialized.")
 
     # ======================================================
     # Experiment
     # ======================================================
 
-    def run_experiment(
+    def run_experiment(self, **kwargs):
 
-        self,
+        kwargs.setdefault("output_root", self.output_root)
 
-        **kwargs
-
-    ):
-
-        logger.info(
-
-            "Running experiment..."
-
-        )
-
-        return self.runner.run(
-
-            **kwargs
-
-        )
+        return run_experiment(**kwargs)
 
     # ======================================================
     # Walk Forward
     # ======================================================
 
-    def run_walk_forward(
+    def run_walk_forward(self, **kwargs):
 
-        self,
+        kwargs.setdefault("output_root", self.output_root)
 
-        **kwargs
-
-    ):
-
-        logger.info(
-
-            "Running walk-forward..."
-
-        )
-
-        return self.walk_forward.run(
-
-            **kwargs
-
-        )
+        return run_walk_forward(**kwargs)
 
     # ======================================================
     # Monte Carlo
     # ======================================================
 
-    def run_monte_carlo(
+    def run_monte_carlo(self, **kwargs):
 
-        self,
+        return run_monte_carlo(**kwargs)
 
-        **kwargs
+    # ======================================================
+    # Ranking
+    # ======================================================
 
-    ):
+    def leaderboard(self):
 
-        logger.info(
-
-            "Running Monte Carlo..."
-
-        )
-
-        return self.monte_carlo.run(
-
-            **kwargs
-
-        )
+        return rank_runs(self.output_root)
 
     # ======================================================
     # Compare
     # ======================================================
 
-    def compare(
+    def compare(self, run_a, run_b):
 
-        self,
-
-        experiment_paths: List[str]
-
-    ):
-
-        logger.info(
-
-            "Comparing experiments..."
-
-        )
-
-        return self.comparison.compare(
-
-            experiment_paths
-
-        )
+        return compare_runs(run_a, run_b)
 
     # ======================================================
     # Summary
@@ -160,25 +77,18 @@ class ResearchEngine:
         print()
 
         print("=" * 80)
-
-        print("ALPHAFORGE V3 RESEARCH ENGINE")
-
+        print("ALPHAFORGE RESEARCH ENGINE")
         print("=" * 80)
+        print()
+
+        print("Output Root :", self.output_root)
 
         print()
 
-        print("Output Root")
-
-        print(self.output_root)
-
-        print()
-
-        print("Modules")
+        print("Capabilities")
 
         print("- Experiment Runner")
-
         print("- Walk Forward")
-
         print("- Monte Carlo")
-
-        print("- Comparison Engine")
+        print("- Leaderboard")
+        print("- Experiment Comparison")

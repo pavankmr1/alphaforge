@@ -34,14 +34,24 @@ class ExperimentIndex:
 
     def register(self, experiment):
 
+        # -----------------------------------------
+        # Prevent duplicate run IDs
+        # -----------------------------------------
+
+        if (
+            not self.df.empty
+            and "run_id" in self.df.columns
+            and experiment["run_id"] in self.df["run_id"].values
+        ):
+            raise ValueError(
+                f"Experiment {experiment['run_id']} already exists."
+            )
+
         row = pd.DataFrame([experiment])
 
         self.df = pd.concat(
-
             [self.df, row],
-
             ignore_index=True
-
         )
 
         self.save()
@@ -152,4 +162,4 @@ class ExperimentIndex:
 
             print()
 
-            print(self.top())
+            print(self.top())   
