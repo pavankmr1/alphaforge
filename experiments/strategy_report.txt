@@ -1,0 +1,69 @@
+================================================================================
+ALPHAFORGE STRATEGY REPORT
+================================================================================
+
+BEST CONFIGURATION
+--------------------------------------------------------------------------------
+run_id: 2026-07-16_025
+strategy: unicorn
+symbol: nifty
+start: 2025-01-01
+end: 2025-01-31
+research_score: 64.18
+min_gap_atr: 0.5
+total_trades: 6
+wins: 3
+losses: 3
+win_rate: 0.5
+profit_factor: 4.835404879373744
+average_rr: 0.9740453334554288
+total_pnl: 330.9984375000022
+average_winner: 139.09973958333285
+average_loser: -28.76692708333212
+best_trade_pnl: 377.84921875000146
+worst_trade_pnl: -47.400781249998545
+stop_buffer: 0.0
+require_trend: True
+
+WORST CONFIGURATION
+--------------------------------------------------------------------------------
+run_id: 2026-07-13_020
+strategy: unicorn
+symbol: nifty
+start: 2025-01-01
+end: 2025-01-02
+research_score: 16.22
+min_gap_atr: 0.5
+total_trades: 2
+wins: 1
+losses: 1
+win_rate: 0.5
+profit_factor: 0.4514858338964445
+average_rr: -0.1820091939079105
+total_pnl: -26.0
+average_winner: 21.400781249998545
+average_loser: -47.400781249998545
+best_trade_pnl: 21.400781249998545
+worst_trade_pnl: -47.400781249998545
+stop_buffer: nan
+require_trend: nan
+
+PARAMETER IMPORTANCE
+--------------------------------------------------------------------------------
+end: 34.28
+min_gap_atr: 19.05
+require_trend: 9.89
+stop_buffer: 2.54
+strategy: 0.00
+symbol: 0.00
+start: 0.00
+
+RECOMMENDATIONS
+--------------------------------------------------------------------------------
+- end has VERY HIGH impact.
+- min_gap_atr has VERY HIGH impact.
+- require_trend has moderate impact.
+- stop_buffer has little impact.
+- strategy has little impact.
+- symbol has little impact.
+- start has little impact.

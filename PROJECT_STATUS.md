@@ -59,3 +59,48 @@ python research/run_monte_carlo.py \
 - Exit Engine V2
 - Hyperparameter Sweeps
 - Multi Asset Testing
+
+
+
+# AlphaForge Status
+
+## V1 — Trading Engine ✅
+
+- Replay Engine
+- Trade Manager
+- Portfolio Engine
+- Strategy Registry
+- Unicorn Strategy
+
+Status: COMPLETE
+
+---
+
+## V2 — Research Infrastructure ✅
+
+- Experiment Runner
+- Experiment Comparison
+- Walk Forward
+- Monte Carlo
+- Experiment Index
+
+Status: COMPLETE
+
+---
+
+## V3 — Research Intelligence ✅
+
+- Research Score
+- Parameter Sweep
+- Grid Search
+- Research Analyzer
+- Strategy Report
+- Research Dashboard CLI
+
+Status: COMPLETE
+
+---
+
+## Next Milestone
+
+V4 — Paper Trading

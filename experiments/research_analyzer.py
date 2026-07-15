@@ -115,7 +115,10 @@ class ResearchAnalyzer:
         ignore = {
 
             "run_id",
-
+            "start",
+            "end",
+            "strategy",
+            "symbol",
             "research_score",
 
             "total_trades",
