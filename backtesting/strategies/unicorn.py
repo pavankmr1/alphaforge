@@ -61,9 +61,7 @@ class UnicornStrategy(Strategy):
 
             "min_gap_atr":[
                 0.3,
-                0.4,
                 0.5,
-                0.6,
                 0.7
             ],
 
@@ -618,9 +616,11 @@ class UnicornStrategy(Strategy):
 
     def retest(self, candle, fvg):
 
+        buffer = candle["ATR14"] * self.config["stop_buffer"]
+
         return (
 
-            candle["Low"] <= fvg.top
+            candle["Low"] <= (fvg.top + buffer)
 
             and
 
@@ -636,7 +636,14 @@ class UnicornStrategy(Strategy):
             StrategyState.TRADE_ACTIVE
         ):
             return
+        # ==========================================================
+        # TREND FILTER
+        # ==========================================================
 
+        if self.config["require_trend"]:
+
+            if not candle["BULLISH_TREND_V2"]:
+                return
         fvg = self.latest_valid_fvg()
 
         if fvg is None:
@@ -649,7 +656,17 @@ class UnicornStrategy(Strategy):
 
         entry_price = candle["Close"]
 
-        stop = fvg.bottom
+        buffer = (
+
+            candle["ATR14"]
+
+            *
+
+            self.config["stop_buffer"]
+
+        )
+
+        stop = fvg.bottom - buffer
 
         target = self.resolve_target(
 
