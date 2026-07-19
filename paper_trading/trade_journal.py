@@ -132,3 +132,40 @@ class TradeJournal:
     def __len__(self):
 
         return len(self.trades)
+    # ======================================================
+    # ALL TRADES
+    # ======================================================
+
+    def all_trades(self):
+        return self.trades
+
+
+    # ======================================================
+    # WINNING TRADES
+    # ======================================================
+
+    def winning_trades(self):
+        return [
+            trade
+            for trade in self.trades
+            if trade.pnl > 0
+        ]
+
+
+    # ======================================================
+    # LOSING TRADES
+    # ======================================================
+
+    def losing_trades(self):
+        return [
+            trade
+            for trade in self.trades
+            if trade.pnl < 0
+        ]
+    # ======================================================
+    # EMPTY
+    # ======================================================
+
+    def is_empty(self):
+
+        return len(self.trades) == 0

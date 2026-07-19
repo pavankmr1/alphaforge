@@ -65,7 +65,8 @@ class PositionManager:
 
             highest_price=float(entry_price),
 
-            lowest_price=float(entry_price)
+            lowest_price=float(entry_price),
+
 
         )
 
@@ -144,7 +145,36 @@ class PositionManager:
         closed.exit_time = exit_time    
 
         return closed
+    def market_value(self):
+        """
+        Current market value of the open position.
+        """
 
+        if not self.has_position():
+            return 0.0
+
+        return (
+            self.position.current_price
+            * self.position.quantity
+        )
+    def unrealized_pnl(self):
+        """
+        Unrealized profit/loss of the open position.
+        """
+
+        if not self.has_position():
+            return 0.0
+
+        return (
+            self.position.current_price
+            - self.position.entry_price
+        ) * self.position.quantity
+    def position_count(self):
+        """
+        Number of currently open positions.
+        """
+
+        return 1 if self.has_position() else 0
     # ==========================================================
     # RESET
     # ==========================================================
@@ -152,3 +182,29 @@ class PositionManager:
     def reset(self):
 
         self.position = None
+
+
+
+    def market_value(self):
+
+        if not self.has_position():
+            return 0.0
+
+        return (
+            self.position.current_price
+            * self.position.quantity
+        )
+
+    def unrealized_pnl(self):
+
+        if not self.has_position():
+            return 0.0
+
+        return (
+            self.position.current_price
+            - self.position.entry_price
+        ) * self.position.quantity
+
+    def position_count(self):
+
+        return 1 if self.has_position() else 0
